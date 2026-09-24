@@ -3,6 +3,7 @@ build/
 dist/
 dev-dist/
 coverage/
+.claude/
 .DS_Store
 *.log
 .env*
