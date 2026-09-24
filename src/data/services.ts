@@ -227,10 +227,10 @@ export const PRE_DESIGNED_EXPERIENCES: PreDesignedExperience[] = [
     tagline: 'Honor their hard-earned degree with a stunning pop-up celebration, family Cap Classique toast, and memory photo wall.',
     shortDescription: 'They worked tirelessly for this degree. Let us orchestrate a surprise celebration with celebration MCC, custom floral leis, and photo stations.',
     fullDescription: 'Graduation day at UCT, Wits, Stellenbosch, or Tuks can be chaotic with crowds and parking. Our concierge coordinates a designated private meeting oasis right after the ceremony—featuring personalized banner styling, chilled Cap Classique toast, custom family memory board, and a professional photographer to ensure you get immaculate photos without waiting in huge university queues.',
-    heroImage: 'https://images.unsplash.com/photo-1747509228690-8f1fef36d0bf?w=900&auto=format&fit=crop&q=80',
+    heroImage: 'https://images.unsplash.com/photo-1789919330674-90fe87277f86?w=900&auto=format&fit=crop&q=80',
     galleryImages: [
-      'https://images.unsplash.com/photo-1747509228690-8f1fef36d0bf?w=600&auto=format&fit=crop&q=80',
-      'https://images.unsplash.com/photo-1627556704290-2b1f5853ff78?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1789919330674-90fe87277f86?w=600&auto=format&fit=crop&q=80',
+      'https://images.unsplash.com/photo-1645263012710-35e2fc89cb5c?w=600&auto=format&fit=crop&q=80',
     ],
     recommendedTier: 'enchanted',
     startingPrice: 6200,
