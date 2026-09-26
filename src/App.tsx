@@ -9,7 +9,6 @@ import { BookingConfirmationView } from './components/BookingConfirmationView';
 import { ActiveBookingsList } from './components/ActiveBookingsList';
 import { BespokeTailoringSection } from './components/BespokeTailoringSection';
 import { BespokeInquiryModal } from './components/BespokeInquiryModal';
-import { OfflineIndicator } from './components/OfflineIndicator';
 import { PRE_DESIGNED_EXPERIENCES } from './data/services';
 import { BookingConfirmation, OccasionType, PreDesignedExperience, ProposalPlan, BespokeInquiry } from './types';
 import { HeartHandshake, Phone, ShieldCheck, Sparkles, ChevronDown, CheckCircle2, HelpCircle } from 'lucide-react';
@@ -182,9 +181,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-stone-50 text-stone-900 flex flex-col selection:bg-rose-500 selection:text-white">
-      {/* Offline Status PWA Banner */}
-      <OfflineIndicator />
-
       {/* Main App Navigation Header */}
       <Header
         activeTab={activeTab === 'confirmation' ? 'my_bookings' : activeTab}

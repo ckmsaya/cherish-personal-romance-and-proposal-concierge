@@ -1,26 +1,19 @@
 import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
-import {registerSW} from 'virtual:pwa-register';
 import App from './App.tsx';
 import './index.css';
 
-// Silently activate new deploys: with registerType 'autoUpdate' the new service
-// worker takes over immediately, but without this the already-open tab keeps
-// running the stale cached bundle until it's closed and reopened.
-registerSW({
-  immediate: true,
-  onRegisteredSW(_url, registration) {
-    if (!registration) return;
-    // A backgrounded mobile PWA is usually resumed, not freshly navigated, so
-    // the browser's automatic update check never fires on its own. Force one
-    // whenever the app comes back into view.
-    document.addEventListener('visibilitychange', () => {
-      if (document.visibilityState === 'visible') {
-        registration.update();
-      }
-    });
-  },
-});
+// The app no longer ships a service worker or offline caching — it's online-only.
+// Clean up any service worker + cache left behind by earlier versions of the app
+// so returning visitors and installed PWAs stop serving stale cached content.
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    registrations.forEach((registration) => registration.unregister());
+  });
+}
+if ('caches' in window) {
+  caches.keys().then((keys) => keys.forEach((key) => caches.delete(key)));
+}
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

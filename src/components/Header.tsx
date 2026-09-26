@@ -1,6 +1,5 @@
 import React from 'react';
 import { HeartHandshake, Sparkles, Calendar, BookOpen, ShieldCheck } from 'lucide-react';
-import { PWAInstallButton } from './PWAInstallButton';
 
 interface HeaderProps {
   activeTab: 'catalog' | 'ai_architect' | 'customizer' | 'my_bookings';
@@ -103,7 +102,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, booking
               <span className="hidden sm:inline">Want Something Unique?</span>
               <span className="sm:hidden">Custom</span>
             </button>
-            <PWAInstallButton />
             <div className="hidden xl:flex items-center gap-1.5 text-xs text-stone-600 bg-stone-50 px-3 py-1.5 rounded-full border border-stone-200/80">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
               <span>100% Discretion Guarantee</span>
