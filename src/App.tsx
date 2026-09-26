@@ -11,8 +11,9 @@ import { BespokeTailoringSection } from './components/BespokeTailoringSection';
 import { BespokeInquiryModal } from './components/BespokeInquiryModal';
 import { PRE_DESIGNED_EXPERIENCES } from './data/services';
 import { BookingConfirmation, OccasionType, PreDesignedExperience, ProposalPlan, BespokeInquiry } from './types';
-import { HeartHandshake, Phone, ShieldCheck, Sparkles, ChevronDown, CheckCircle2, HelpCircle } from 'lucide-react';
+import { HeartHandshake, Phone, Mail, ShieldCheck, Sparkles, ChevronDown, CheckCircle2, HelpCircle } from 'lucide-react';
 import { getDeviceId } from './lib/deviceId';
+import { buildWhatsAppLink } from './lib/contact';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<'catalog' | 'ai_architect' | 'customizer' | 'my_bookings' | 'confirmation'>('catalog');
@@ -77,11 +78,13 @@ export default function App() {
   }, []);
 
   const handleOpenWhatsAppDirect = () => {
-    const phone = '27825552437';
-    const text = encodeURIComponent(
-      'Hi Cherish Concierge Team! I want something unique tailored for our special romantic moment. Can we chat about creating a custom experience?'
+    window.open(
+      buildWhatsAppLink(
+        '27646261102',
+        'Hi Cherish Concierge Team! I want something unique tailored for our special romantic moment. Can we chat about creating a custom experience?'
+      ),
+      '_blank'
     );
-    window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
   };
 
   const handleBespokeInquirySubmitted = (inquiry: BespokeInquiry) => {
@@ -414,10 +417,22 @@ export default function App() {
               <p className="text-xs sm:text-sm text-stone-400 max-w-sm leading-relaxed">
                 Your discreet, personal assistance team in South Africa for asking people out, popping wedding proposals, luxury picnics, clue scavenger hunts, flower deliveries, graduation tributes, and bachelor parties.
               </p>
-              <div className="flex items-center gap-2 text-xs text-rose-300">
+              <a
+                href="https://wa.me/27646261102"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 text-xs text-rose-300 hover:text-rose-200 transition w-fit"
+              >
                 <Phone className="w-4 h-4 text-rose-500" />
-                <span>24/7 SA Concierge Line & WhatsApp: +27 82 555 CHERISH (+27 82 555 2437)</span>
-              </div>
+                <span>24/7 SA Concierge Line & WhatsApp: +27 64 626 1102</span>
+              </a>
+              <a
+                href="mailto:ckmsaya@gmail.com"
+                className="flex items-center gap-2 text-xs text-rose-300 hover:text-rose-200 transition w-fit"
+              >
+                <Mail className="w-4 h-4 text-rose-500" />
+                <span>ckmsaya@gmail.com</span>
+              </a>
             </div>
 
             <div>

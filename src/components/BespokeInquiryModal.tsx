@@ -4,6 +4,7 @@ import {
   Sparkles,
   Send,
   MessageSquare,
+  Mail,
   Phone,
   ShieldCheck,
   CheckCircle2,
@@ -16,6 +17,7 @@ import {
 } from 'lucide-react';
 import { BespokeInquiry, ConciergeAgent } from '../types';
 import { getDeviceId } from '../lib/deviceId';
+import { buildWhatsAppLink, buildMailtoLink } from '../lib/contact';
 
 interface BespokeInquiryModalProps {
   isOpen: boolean;
@@ -123,11 +125,16 @@ export const BespokeInquiryModal: React.FC<BespokeInquiryModalProps> = ({
   };
 
   const handleOpenDirectWhatsApp = (concierge?: ConciergeAgent) => {
-    const phone = concierge ? concierge.phone.replace(/[^0-9]/g, '') : '27825552437';
-    const text = encodeURIComponent(
-      `Hi Cherish Concierge Team! I want something unique tailored for a ${occasion}. My name is ${clientName || 'a client'}. Can we chat about creating a custom experience?`
+    const phone = concierge ? concierge.phone : '27646261102';
+    const text = `Hi Cherish Concierge Team! I want something unique tailored for a ${occasion}. My name is ${clientName || 'a client'}. Can we chat about creating a custom experience?`;
+    window.open(buildWhatsAppLink(phone, text), '_blank');
+  };
+
+  const handleOpenDirectEmail = () => {
+    window.location.href = buildMailtoLink(
+      `Bespoke Inquiry: ${occasion}`,
+      `Hi Cherish Concierge Team,\n\nMy name is ${clientName || '[your name]'}. I'd like something tailored for a ${occasion}.\n\n${customVision || '[describe your vision here]'}\n\nThanks!`
     );
-    window.open(`https://wa.me/${phone}?text=${text}`, '_blank');
   };
 
   return (
@@ -204,7 +211,7 @@ export const BespokeInquiryModal: React.FC<BespokeInquiryModalProps> = ({
                 </div>
               </div>
 
-              {/* Action: Open WhatsApp directly */}
+              {/* Action: Open WhatsApp or Email directly */}
               <div className="space-y-3 pt-2">
                 <a
                   href={submittedInquiry.whatsappQuickLink}
@@ -215,6 +222,17 @@ export const BespokeInquiryModal: React.FC<BespokeInquiryModalProps> = ({
                   <MessageSquare className="w-4 h-4" />
                   <span>Start WhatsApp Chat with {submittedInquiry.assignedConcierge.name}</span>
                   <ArrowRight className="w-4 h-4 ml-1" />
+                </a>
+
+                <a
+                  href={buildMailtoLink(
+                    `Bespoke Inquiry #${submittedInquiry.inquiryId}`,
+                    `Hi ${submittedInquiry.assignedConcierge.name},\n\nFollowing up on my bespoke inquiry #${submittedInquiry.inquiryId} for a ${submittedInquiry.occasion}.\n\nThanks!`
+                  )}
+                  className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-2xl bg-stone-100 hover:bg-stone-200 text-stone-800 font-semibold text-xs transition"
+                >
+                  <Mail className="w-4 h-4" />
+                  <span>Email Us Instead</span>
                 </a>
 
                 <button
@@ -244,13 +262,22 @@ export const BespokeInquiryModal: React.FC<BespokeInquiryModalProps> = ({
                     <span className="text-[11px] text-emerald-700">Chat directly with our senior South African team on WhatsApp.</span>
                   </div>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => handleOpenDirectWhatsApp()}
-                  className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition flex-shrink-0 cursor-pointer"
-                >
-                  WhatsApp Now
-                </button>
+                <div className="flex items-center gap-2 flex-shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => handleOpenDirectWhatsApp()}
+                    className="px-3.5 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs transition cursor-pointer"
+                  >
+                    WhatsApp Now
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleOpenDirectEmail}
+                    className="px-3.5 py-1.5 rounded-xl bg-white border border-emerald-300 hover:bg-emerald-100 text-emerald-800 font-semibold text-xs transition cursor-pointer"
+                  >
+                    Email
+                  </button>
+                </div>
               </div>
 
               {/* Occasion & Setting */}
@@ -457,6 +484,15 @@ export const BespokeInquiryModal: React.FC<BespokeInquiryModalProps> = ({
                 >
                   <MessageSquare className="w-4 h-4 text-emerald-600" />
                   <span>Direct WhatsApp</span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleOpenDirectEmail}
+                  className="w-full sm:w-auto flex items-center justify-center gap-1.5 py-3.5 px-5 rounded-2xl bg-stone-100 hover:bg-stone-200 text-stone-800 font-semibold text-xs transition cursor-pointer"
+                >
+                  <Mail className="w-4 h-4 text-rose-600" />
+                  <span>Direct Email</span>
                 </button>
               </div>
             </form>

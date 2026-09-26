@@ -1,6 +1,7 @@
 import React from 'react';
-import { Calendar, Clock, MapPin, UserCheck, ShieldCheck, ArrowRight, HeartHandshake, Phone, Sparkles, MessageSquare } from 'lucide-react';
+import { Calendar, Clock, MapPin, UserCheck, ShieldCheck, ArrowRight, HeartHandshake, Phone, Mail, Sparkles, MessageSquare } from 'lucide-react';
 import { BookingConfirmation, BespokeInquiry } from '../types';
+import { buildWhatsAppLink, buildMailtoLink } from '../lib/contact';
 
 interface ActiveBookingsListProps {
   bookings: BookingConfirmation[];
@@ -145,15 +146,27 @@ export const ActiveBookingsList: React.FC<ActiveBookingsListProps> = ({
                   </span>
                 </div>
 
-                <a
-                  href={inquiry.whatsappQuickLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition"
-                >
-                  <MessageSquare className="w-3.5 h-3.5" />
-                  <span>Chat on WhatsApp</span>
-                </a>
+                <div className="flex items-center gap-2">
+                  <a
+                    href={inquiry.whatsappQuickLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition"
+                  >
+                    <MessageSquare className="w-3.5 h-3.5" />
+                    <span>Chat on WhatsApp</span>
+                  </a>
+                  <a
+                    href={buildMailtoLink(
+                      `Bespoke Inquiry #${inquiry.inquiryId}`,
+                      `Hi ${inquiry.assignedConcierge.name},\n\nFollowing up on my bespoke inquiry #${inquiry.inquiryId} for a ${inquiry.occasion}.\n\nThanks!`
+                    )}
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition"
+                  >
+                    <Mail className="w-3.5 h-3.5" />
+                    <span>Email</span>
+                  </a>
+                </div>
               </div>
             </div>
           ))}
@@ -225,10 +238,36 @@ export const ActiveBookingsList: React.FC<ActiveBookingsListProps> = ({
                   </span>
                 </div>
 
-                <span className="flex items-center gap-1 text-xs font-semibold text-rose-600 group-hover:translate-x-1 transition-transform">
-                  <span>View Full Cue Card</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
-                </span>
+                <div className="flex items-center gap-2">
+                  <a
+                    href={buildWhatsAppLink(
+                      booking.assignedConcierge.phone,
+                      `Hi ${booking.assignedConcierge.name}! Following up on my booking ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.`
+                    )}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="p-2 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 transition"
+                    aria-label={`WhatsApp ${booking.assignedConcierge.name}`}
+                  >
+                    <MessageSquare className="w-3.5 h-3.5" />
+                  </a>
+                  <a
+                    href={buildMailtoLink(
+                      `Booking ${booking.bookingId}`,
+                      `Hi ${booking.assignedConcierge.name},\n\nFollowing up on my booking ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.\n\nThanks!`
+                    )}
+                    onClick={(e) => e.stopPropagation()}
+                    className="p-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 transition"
+                    aria-label="Email concierge"
+                  >
+                    <Mail className="w-3.5 h-3.5" />
+                  </a>
+                  <span className="flex items-center gap-1 text-xs font-semibold text-rose-600 group-hover:translate-x-1 transition-transform">
+                    <span>View Full Cue Card</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
+                  </span>
+                </div>
               </div>
             </div>
           ))}

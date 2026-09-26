@@ -1,6 +1,7 @@
 import React from 'react';
-import { CheckCircle2, ShieldCheck, Phone, Calendar, Clock, MapPin, Download, Heart, ArrowRight, Printer, Sparkles, UserCheck } from 'lucide-react';
+import { CheckCircle2, ShieldCheck, Mail, Calendar, Clock, MapPin, Download, Heart, ArrowRight, Printer, Sparkles, UserCheck, MessageSquare } from 'lucide-react';
 import { BookingConfirmation } from '../types';
+import { buildWhatsAppLink, buildMailtoLink } from '../lib/contact';
 
 interface BookingConfirmationViewProps {
   booking: BookingConfirmation;
@@ -82,9 +83,29 @@ export const BookingConfirmationView: React.FC<BookingConfirmationViewProps> = (
             <p className="text-xs text-stone-500 font-medium">{booking.assignedConcierge.title}</p>
             <p className="text-xs text-stone-600 mt-1.5 leading-relaxed">{booking.assignedConcierge.bio}</p>
 
-            <div className="mt-3 inline-flex items-center gap-2 text-xs font-semibold text-rose-900 bg-rose-100/70 px-3 py-1.5 rounded-xl">
-              <Phone className="w-3.5 h-3.5 text-rose-700" />
-              <span>Direct WhatsApp & Call Line: {booking.assignedConcierge.phone}</span>
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <a
+                href={buildWhatsAppLink(
+                  booking.assignedConcierge.phone,
+                  `Hi ${booking.assignedConcierge.name}! Following up on my booking ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.`
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 px-3 py-1.5 rounded-xl transition"
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>WhatsApp {booking.assignedConcierge.name}</span>
+              </a>
+              <a
+                href={buildMailtoLink(
+                  `Booking ${booking.bookingId}`,
+                  `Hi ${booking.assignedConcierge.name},\n\nFollowing up on my booking ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.\n\nThanks!`
+                )}
+                className="inline-flex items-center gap-2 text-xs font-semibold text-rose-900 bg-rose-100/70 hover:bg-rose-200 px-3 py-1.5 rounded-xl transition"
+              >
+                <Mail className="w-3.5 h-3.5 text-rose-700" />
+                <span>Email Us</span>
+              </a>
             </div>
           </div>
         </div>

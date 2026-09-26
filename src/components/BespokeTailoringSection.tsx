@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Sparkles,
   MessageSquare,
+  Mail,
   ArrowRight,
   ShieldCheck,
   Compass,
@@ -9,6 +10,7 @@ import {
   Heart,
   Clock
 } from 'lucide-react';
+import { buildMailtoLink } from '../lib/contact';
 
 interface BespokeTailoringSectionProps {
   onOpenBespokeModal: () => void;
@@ -129,6 +131,17 @@ export const BespokeTailoringSection: React.FC<BespokeTailoringSectionProps> = (
                 <MessageSquare className="w-4 h-4" />
                 <span>Reach Out on WhatsApp</span>
               </button>
+
+              <a
+                href={buildMailtoLink(
+                  'Bespoke Consultation Request',
+                  "Hi Cherish Concierge Team,\n\nI'd like to discuss a custom tailored experience.\n\n[Describe your vision here]\n\nThanks!"
+                )}
+                className="w-full flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-white/10 hover:bg-white/20 active:scale-98 text-white font-semibold text-xs transition"
+              >
+                <Mail className="w-4 h-4" />
+                <span>Email Us Directly</span>
+              </a>
             </div>
 
             <div className="flex items-center justify-center gap-1.5 text-[11px] text-stone-400 pt-1">
