@@ -68,7 +68,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
               className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white text-stone-900 border border-stone-300 text-sm font-semibold hover:bg-stone-50 active:scale-98 transition shadow-xs"
             >
               <Heart className="w-4 h-4 text-rose-500" />
-              <span>Choose Services & Lock Deposit</span>
+              <span>Choose Services & Request a Booking</span>
             </button>
           </div>
 
@@ -78,7 +78,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
               <UserCheck className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-xs font-bold text-stone-900">Dedicated Concierge</h4>
-                <p className="text-[11px] text-stone-500 leading-snug">Personal director assigned to coordinate every vendor.</p>
+                <p className="text-[11px] text-stone-500 leading-snug">We coordinate every vendor and timing cue for you.</p>
               </div>
             </div>
             <div className="flex items-start gap-2.5 p-2">
@@ -91,8 +91,8 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
             <div className="flex items-start gap-2.5 p-2">
               <ShieldCheck className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
               <div>
-                <h4 className="text-xs font-bold text-stone-900">Easy Deposit Lock</h4>
-                <p className="text-[11px] text-stone-500 leading-snug">Lock your date with a modest deposit; pay balance day of.</p>
+                <h4 className="text-xs font-bold text-stone-900">Simple Deposit</h4>
+                <p className="text-[11px] text-stone-500 leading-snug">No online payment. Secure your date with an EFT deposit; pay the balance on the day.</p>
               </div>
             </div>
           </div>

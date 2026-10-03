@@ -1,6 +1,15 @@
 import express from 'express';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 
+// Real contact channel for every booking and inquiry (no individual staff personas)
+const CONCIERGE_TEAM = {
+  name: 'Cherish Concierge Team',
+  title: 'Cherish Concierge',
+  avatar: '',
+  phone: '+27 64 626 1102',
+  bio: 'We plan and coordinate your surprise with you directly over WhatsApp, phone, or email.',
+};
+
 // Initialize Supabase (server-only service_role client — never expose this key to the browser)
 let supabase: SupabaseClient | null = null;
 const getSupabaseClient = (): SupabaseClient | null => {
@@ -73,7 +82,7 @@ export function createApiApp() {
             role: 'Lead Concierge Director',
             serviceDescription: 'On-site live coordination, time-keeper, load-shedding battery backup, cue signaling.',
             estimatedCost: 'Included in Service Tier',
-            status: 'Confirmed & Assigned',
+            status: 'Included',
           },
           {
             role: 'Discreet Candid Photographer',
@@ -133,35 +142,11 @@ export function createApiApp() {
       const randomSuffix = Math.floor(1000 + Math.random() * 9000);
       const bookingId = `CHR-ZA-${new Date().getFullYear()}-${randomSuffix}`;
 
-      const concierges = [
-        {
-          name: 'Sipho Dlamini',
-          title: 'Senior Romance Director & Winelands Specialist',
-          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-          phone: '+27 64 626 1102',
-          bio: 'Orchestrated over 280 unforgettable proposals and sunset picnics across Cape Town, Franschhoek, and Stellenbosch.',
-        },
-        {
-          name: 'Naledi Khumalo',
-          title: 'Lead Proposal Architect & Gauteng Director',
-          avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
-          phone: '+27 64 626 1102',
-          bio: 'Specialist in luxury rooftop moments, Cradle of Humankind surprises, and milestone graduation galas across Jozi and Pretoria.',
-        },
-        {
-          name: 'Liezl van der Merwe',
-          title: 'Coastal Moments & Luxury Picnic Lead',
-          avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
-          phone: '+27 64 626 1102',
-          bio: 'Durban, Ballito, and Garden Route specialist creating barefoot beach setups, oyster bars, and acoustic serenade surprises.',
-        },
-      ];
-
-      const assignedConcierge = concierges[Math.floor(Math.random() * concierges.length)];
+      const assignedConcierge = CONCIERGE_TEAM;
 
       const booking = {
         bookingId,
-        status: 'Deposit Confirmed & Concierge Assigned',
+        status: 'Booking Request Received - Awaiting Deposit',
         clientName,
         clientPhone,
         clientEmail,
@@ -177,13 +162,13 @@ export function createApiApp() {
         selectedAddons,
         specialNotes,
         assignedConcierge,
-        depositReceiptNumber: `REC-ZA-${Date.now().toString().slice(-6)}`,
+        depositReceiptNumber: '',
         bookedAt: new Date().toISOString(),
-        conciergeDirectChannel: 'VIP Concierge WhatsApp & SMS hotline activated',
+        conciergeDirectChannel: `WhatsApp ${CONCIERGE_TEAM.phone}`,
         nextSteps: [
-          'No stress, you are sorted! Your date, location permit, and vendors are officially locked in.',
-          `Your dedicated concierge ${assignedConcierge.name} will message you on WhatsApp within 2 hours to confirm details.`,
-          'You will receive a rehearsal guide and printable pocket cue card 48 hours prior to the event.',
+          'We check availability for your date, location, and the vendors you selected.',
+          'We contact you on WhatsApp or email to confirm the details and send deposit payment instructions.',
+          'Your date is secured once your deposit is received. No payment is taken on this website.',
         ],
         plan,
       };
@@ -297,48 +282,17 @@ export function createApiApp() {
       const randomSuffix = Math.floor(1000 + Math.random() * 9000);
       const inquiryId = `BESPOKE-ZA-${new Date().getFullYear()}-${randomSuffix}`;
 
-      const concierges = [
-        {
-          name: 'Sipho Dlamini',
-          title: 'Senior Romance Director & Winelands Specialist',
-          avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-          phone: '+27 64 626 1102',
-          bio: 'Orchestrated over 280 unforgettable proposals, helicopter cliffside flips, and private estate buyouts across South Africa.',
-        },
-        {
-          name: 'Naledi Khumalo',
-          title: 'Lead Proposal Architect & Gauteng/Safari Director',
-          avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=80',
-          phone: '+27 64 626 1102',
-          bio: 'Specialist in custom bushveld safari moments, Magaliesberg balloon landings, and bespoke city rooftop spectacles.',
-        },
-        {
-          name: 'Liezl van der Merwe',
-          title: 'Coastal Romance & Luxury Tailored Experience Lead',
-          avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&auto=format&fit=crop&q=80',
-          phone: '+27 64 626 1102',
-          bio: 'Garden Route & KwaZulu-Natal coast specialist for barefoot luxury, private catamarans, and secluded cove setups.',
-        },
-      ];
-
-      // Pick concierge matching location if possible
-      let assignedConcierge = concierges[0];
-      const locLower = (locationArea || '').toLowerCase();
-      if (locLower.includes('jozi') || locLower.includes('johannesburg') || locLower.includes('pretoria') || locLower.includes('safari') || locLower.includes('kruger')) {
-        assignedConcierge = concierges[1];
-      } else if (locLower.includes('durban') || locLower.includes('ballito') || locLower.includes('natal') || locLower.includes('garden route')) {
-        assignedConcierge = concierges[2];
-      }
+      const assignedConcierge = CONCIERGE_TEAM;
 
       const prefilledText = encodeURIComponent(
-        `Hi ${assignedConcierge.name}! I just submitted my unique bespoke brief #${inquiryId} on Cherish for a ${occasion} in ${locationArea}. Here's what I have in mind: "${customVision.slice(0, 100)}..." Excited to discuss how we can tailor it!`
+        `Hi Cherish! I just submitted my unique bespoke brief #${inquiryId} on Cherish for a ${occasion} in ${locationArea}. Here's what I have in mind: "${customVision.slice(0, 100)}..." Excited to discuss how we can tailor it!`
       );
       const cleanPhone = assignedConcierge.phone.replace(/[^0-9]/g, '');
       const whatsappQuickLink = `https://wa.me/${cleanPhone}?text=${prefilledText}`;
 
       const inquiry = {
         inquiryId,
-        status: 'Bespoke Brief Received & Lead Director Assigned',
+        status: 'Bespoke Brief Received',
         clientName,
         clientPhone,
         clientEmail,
@@ -352,7 +306,7 @@ export function createApiApp() {
         submittedAt: new Date().toISOString(),
         assignedConcierge,
         whatsappQuickLink,
-        guaranteeMessage: 'Your unique idea is held under strict non-disclosure and 100% discretion. We never spoil surprises.',
+        guaranteeMessage: 'Your idea stays private between you and our team.',
       };
 
       const db = getSupabaseClient();

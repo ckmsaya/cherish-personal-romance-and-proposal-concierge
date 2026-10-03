@@ -58,7 +58,7 @@ export const BespokeTailoringSection: React.FC<BespokeTailoringSectionProps> = (
             </p>
 
             <p className="text-stone-300 text-xs sm:text-sm leading-relaxed max-w-xl">
-              Can't find your exact vision in our signature catalog? Whether you want to land a helicopter on a mountain ridge in the Cape Winelands, organize a secluded safari bush surprise in the Kruger, rent out an entire art gallery, or execute a witty inside-joke scavenger hunt — our dedicated South African romance directors handle every permit, musician, floral stylist, and secret cue.
+              Can't find your exact vision in our signature catalog? Whether you want to land a helicopter on a mountain ridge in the Cape Winelands, organize a secluded safari bush surprise in the Kruger, rent out an entire art gallery, or execute a witty inside-joke scavenger hunt — we coordinate the permits, musicians, floral stylists, and secret cues for you.
             </p>
 
             {/* Inspiration Chips */}

@@ -166,7 +166,7 @@ export default function App() {
     },
     {
       q: 'How does the deposit system work?',
-      a: 'You pay a modest reservation deposit (R450 for Sweet Touch, R1,600 for Enchanted, R4,500 for Cinematic) to lock in your date, assign your Senior Concierge Director, and reserve the vendors. The remaining balance is only charged on the day of the event once you are 100% satisfied.',
+      a: 'Send us a booking request online. Nothing is charged on the website. We confirm availability with you on WhatsApp or email, then send EFT details for the deposit (R450 for Sweet Touch, R1,600 for Enchanted, R4,500 for Cinematic). Your date is secured once the deposit is received, and the balance is paid on the day of the event.',
     },
     {
       q: 'How does the secret candid photographer hide?',
@@ -174,11 +174,11 @@ export default function App() {
     },
     {
       q: 'What if the weather turns bad on the proposal day?',
-      a: 'Every single Cherish booking includes a 100% Weather Contingency Guarantee. Your concierge pre-scouts a sheltered romantic alternative (such as a greenhouse, historic library corner, or private indoor salon) and makes the call with you 4 hours in advance.',
+      a: 'For outdoor setups we plan a sheltered backup option with you in advance, and we make the call together closer to the time based on the forecast.',
     },
     {
       q: 'Can I customize the proposal script or add our own inside jokes?',
-      a: 'Absolutely! Our AI Romance Architect drafts the foundational cue sheet, and your dedicated personal concierge reviews and fine-tunes every single line during your 1-on-1 prep call.',
+      a: 'Absolutely! Our AI Romance Architect drafts a starting script and cue sheet, and we refine it with you before the day.',
     },
   ];
 
@@ -284,7 +284,7 @@ export default function App() {
                       }}
                       className="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold transition"
                     >
-                      Browse Services & Lock Deposit
+                      Browse Services & Request a Booking
                     </button>
                   </div>
                 </div>
@@ -301,7 +301,7 @@ export default function App() {
                     Everything You Need to Know
                   </h3>
                   <p className="text-stone-500 text-sm mt-1">
-                    Have questions before paying your deposit? We are with you every step.
+                    Have questions before booking? Just ask us on WhatsApp or email.
                   </p>
                 </div>
 
@@ -424,7 +424,7 @@ export default function App() {
                 className="flex items-center gap-2 text-xs text-rose-300 hover:text-rose-200 transition w-fit"
               >
                 <Phone className="w-4 h-4 text-rose-500" />
-                <span>24/7 SA Concierge Line & WhatsApp: +27 64 626 1102</span>
+                <span>WhatsApp & Phone: +27 64 626 1102</span>
               </a>
               <a
                 href="mailto:ckmsaya@gmail.com"
@@ -471,7 +471,7 @@ export default function App() {
                   AI Tailored Romance Architect
                 </li>
                 <li className="hover:text-white cursor-pointer" onClick={() => { setActiveTab('customizer'); }}>
-                  Deposit & Vendor Lock Flow
+                  Request a Booking
                 </li>
                 <li className="hover:text-white cursor-pointer" onClick={() => { setSelectedOccasion('graduation_surprise'); setActiveTab('catalog'); }}>
                   Graduation Celebrations
@@ -484,11 +484,11 @@ export default function App() {
           </div>
 
           <div className="pt-8 border-t border-stone-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500">
-            <p>© {new Date().getFullYear()} Cherish Concierge Inc. Installable Progressive Web Application.</p>
+            <p>© {new Date().getFullYear()} Cherish Concierge. South Africa.</p>
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1 text-emerald-400">
                 <ShieldCheck className="w-3.5 h-3.5" />
-                100% Confidential & Discretion Guaranteed
+                Your surprise stays private
               </span>
             </div>
           </div>

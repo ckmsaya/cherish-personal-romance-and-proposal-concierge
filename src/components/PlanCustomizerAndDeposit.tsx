@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShieldCheck, Check, Sparkles, CreditCard, Lock, Calendar, Clock, MapPin, User, Phone, Mail, ArrowRight, HeartHandshake, AlertCircle } from 'lucide-react';
+import { ShieldCheck, Check, Sparkles, Send, Calendar, Clock, MapPin, User, Phone, Mail, ArrowRight, HeartHandshake, AlertCircle } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { BookingConfirmation, OccasionType, ProposalPlan, ScaleTier } from '../types';
 import { SERVICE_TIERS, VENDOR_ADDONS } from '../data/services';
@@ -38,12 +38,6 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
   const [clientEmail, setClientEmail] = useState('');
   const [specialNotes, setSpecialNotes] = useState('');
 
-  // Payment method
-  const [paymentMethod, setPaymentMethod] = useState<'card' | 'eft' | 'apple_pay'>('card');
-  const [cardNumber, setCardNumber] = useState('4242 •••• •••• 4242');
-  const [cardExpiry, setCardExpiry] = useState('12/28');
-  const [cardCvc, setCardCvc] = useState('984');
-
   const [isProcessing, setIsProcessing] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
@@ -69,7 +63,7 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
   const handleDepositPayment = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!clientName.trim() || !clientEmail.trim() || !clientPhone.trim()) {
-      setErrorMsg('Please enter your name, phone number, and email to confirm your concierge.');
+      setErrorMsg('Please enter your name, phone number, and email so we can confirm your booking.');
       return;
     }
 
@@ -122,11 +116,11 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
 
         onBookingSuccess(fullBooking);
       } else {
-        setErrorMsg('Booking could not be processed. Please verify your details.');
+        setErrorMsg('Your booking request could not be sent. Please verify your details.');
       }
     } catch (err) {
       console.error(err);
-      setErrorMsg('Failed to process booking. Please check your connection.');
+      setErrorMsg('Could not send your booking request. Please check your connection or WhatsApp us.');
     } finally {
       setIsProcessing(false);
     }
@@ -138,13 +132,13 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
       <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-100 text-rose-800 text-xs font-semibold mb-3">
           <HeartHandshake className="w-3.5 h-3.5 text-rose-600" />
-          <span>Concierge Package Customizer & Deposit</span>
+          <span>Build Your Package & Request a Booking</span>
         </div>
         <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold text-stone-900 tracking-tight mb-2">
-          Select Your Services & Lock Your Date
+          Select Your Services & Request Your Date
         </h2>
         <p className="text-stone-600 text-sm sm:text-base">
-          Choose what works for you. Pay a small reservation deposit today to assign your dedicated concierge and lock your vendor squad. Pay the rest the day of.
+          Choose what works for you and send us your request. No payment is taken online: we confirm availability with you first, then send deposit details to secure your date. The balance is paid on the day.
         </p>
       </div>
 
@@ -204,7 +198,7 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
               <label className="block text-xs font-bold text-stone-900 uppercase tracking-wider">
                 2. Select Your Concierge Plan Tier
               </label>
-              <span className="text-[11px] text-stone-500 font-medium">All tiers include dedicated concierge</span>
+              <span className="text-[11px] text-stone-500 font-medium">All tiers include personal planning support</span>
             </div>
 
             <div className="space-y-3">
@@ -363,7 +357,7 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
 
             <div>
               <span className="text-xs font-semibold text-stone-700 block mb-1">
-                Special Instructions for Your Dedicated Concierge (Optional)
+                Special Instructions for Our Team (Optional)
               </span>
               <input
                 type="text"
@@ -383,11 +377,11 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
             <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-md space-y-5">
               <div className="flex items-center justify-between pb-3 border-b border-stone-100">
                 <h3 className="font-serif-luxury text-xl font-bold text-stone-900">
-                  Concierge Reservation
+                  Booking Request
                 </h3>
-                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full">
+                <span className="inline-flex items-center gap-1 text-[11px] font-bold text-stone-700 bg-stone-100 px-2.5 py-0.5 rounded-full">
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  Deposit Lock Active
+                  No payment online
                 </span>
               </div>
 
@@ -417,7 +411,7 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
                 )}
 
                 <div className="pt-3 border-t border-stone-200 flex items-center justify-between text-stone-900 text-sm font-semibold">
-                  <span>Total Estimated Production:</span>
+                  <span>Total Estimated Cost:</span>
                   <span>R{totalEstimatedAmount.toLocaleString()}</span>
                 </div>
 
@@ -426,10 +420,10 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
                   <div className="flex items-baseline justify-between">
                     <div>
                       <span className="text-xs font-bold text-rose-950 block">
-                        Reservation Deposit Due Today:
+                        Deposit to Secure Your Date:
                       </span>
                       <span className="text-[11px] text-rose-700">
-                        Locks your date, vendors & concierge director
+                        Payable after we confirm availability
                       </span>
                     </div>
                     <span className="text-2xl font-bold text-rose-700">
@@ -447,7 +441,7 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
               {/* Client Contact Info */}
               <div className="space-y-3 pt-2">
                 <span className="text-xs font-bold text-stone-900 uppercase tracking-wider block">
-                  Your Contact Details (For Secret Updates)
+                  Your Contact Details
                 </span>
 
                 <div>
@@ -481,96 +475,12 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
                 </div>
               </div>
 
-              {/* Deposit Payment Selector */}
-              <div className="space-y-3 pt-2 border-t border-stone-100">
-                <span className="text-xs font-bold text-stone-900 uppercase tracking-wider block">
-                  Deposit Payment Method
-                </span>
-
-                <div className="grid grid-cols-3 gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('card')}
-                    className={`py-2 px-2 rounded-xl text-xs font-semibold text-center border transition ${
-                      paymentMethod === 'card'
-                        ? 'bg-stone-900 text-white border-stone-900'
-                        : 'bg-stone-50 text-stone-700 border-stone-200'
-                    }`}
-                  >
-                    Card (Visa/MC)
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('eft')}
-                    className={`py-2 px-2 rounded-xl text-xs font-semibold text-center border transition ${
-                      paymentMethod === 'eft'
-                        ? 'bg-stone-900 text-white border-stone-900'
-                        : 'bg-stone-50 text-stone-700 border-stone-200'
-                    }`}
-                  >
-                    Instant EFT / Ozow
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setPaymentMethod('apple_pay')}
-                    className={`py-2 px-2 rounded-xl text-xs font-semibold text-center border transition ${
-                      paymentMethod === 'apple_pay'
-                        ? 'bg-stone-900 text-white border-stone-900'
-                        : 'bg-stone-50 text-stone-700 border-stone-200'
-                    }`}
-                  >
-                    Apple / G Pay
-                  </button>
-                </div>
-
-                {paymentMethod === 'card' && (
-                  <div className="p-3 bg-stone-50 rounded-xl border border-stone-200 space-y-2 text-xs">
-                    <div>
-                      <span className="text-[10px] text-stone-500 block mb-0.5">Card Number</span>
-                      <div className="relative">
-                        <input
-                          type="text"
-                          value={cardNumber}
-                          onChange={(e) => setCardNumber(e.target.value)}
-                          className="w-full px-3 py-1.5 rounded-lg bg-white border border-stone-200 text-xs font-mono"
-                        />
-                        <CreditCard className="w-4 h-4 text-stone-400 absolute right-2.5 top-2" />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-2">
-                      <div>
-                        <span className="text-[10px] text-stone-500 block mb-0.5">Expires</span>
-                        <input
-                          type="text"
-                          value={cardExpiry}
-                          onChange={(e) => setCardExpiry(e.target.value)}
-                          className="w-full px-3 py-1.5 rounded-lg bg-white border border-stone-200 text-xs font-mono"
-                        />
-                      </div>
-                      <div>
-                        <span className="text-[10px] text-stone-500 block mb-0.5">CVC</span>
-                        <input
-                          type="text"
-                          value={cardCvc}
-                          onChange={(e) => setCardCvc(e.target.value)}
-                          className="w-full px-3 py-1.5 rounded-lg bg-white border border-stone-200 text-xs font-mono"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {paymentMethod === 'eft' && (
-                  <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-900 space-y-1">
-                    <p className="font-semibold flex items-center gap-1.5">
-                      <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                      Instant EFT (Ozow, Capitec Pay & SnapScan Supported)
-                    </p>
-                    <p className="text-[11px] text-emerald-800">
-                      Zero card fees. Instant verification through Capitec, FNB, Standard Bank, Nedbank, or Absa.
-                    </p>
-                  </div>
-                )}
+              {/* How payment works */}
+              <div className="p-3 bg-stone-50 rounded-xl border border-stone-200 text-xs text-stone-700 space-y-1">
+                <p className="font-semibold text-stone-900">How payment works</p>
+                <p className="text-[11px] text-stone-600 leading-relaxed">
+                  Sending this request does not charge you. We will WhatsApp or email you to confirm availability and send EFT details for the deposit. Your date is secured once the deposit is received.
+                </p>
               </div>
 
               {errorMsg && (
@@ -587,17 +497,17 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
                 className="w-full flex items-center justify-center gap-2 py-4 px-6 rounded-2xl bg-rose-600 hover:bg-rose-700 active:scale-98 text-white font-semibold text-sm shadow-md shadow-rose-200 transition disabled:opacity-75 cursor-pointer"
               >
                 {isProcessing ? (
-                  <span>Locking Vendors & Processing R{depositAmount.toLocaleString()} Deposit...</span>
+                  <span>Sending Your Request...</span>
                 ) : (
                   <>
-                    <Lock className="w-4 h-4" />
-                    <span>Pay R{depositAmount.toLocaleString()} Deposit & Lock Concierge</span>
+                    <Send className="w-4 h-4" />
+                    <span>Send Booking Request</span>
                   </>
                 )}
               </button>
 
               <p className="text-[11px] text-center text-stone-500 leading-tight">
-                🔒 256-bit secure reservation. 100% money-back guarantee if cancelled up to 72 hours prior.
+                We usually reply within one business day.
               </p>
             </div>
           </div>

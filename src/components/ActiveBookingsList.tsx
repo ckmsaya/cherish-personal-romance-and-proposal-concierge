@@ -1,7 +1,7 @@
 import React from 'react';
 import { Calendar, Clock, MapPin, UserCheck, ShieldCheck, ArrowRight, HeartHandshake, Phone, Mail, Sparkles, MessageSquare } from 'lucide-react';
 import { BookingConfirmation, BespokeInquiry } from '../types';
-import { buildWhatsAppLink, buildMailtoLink } from '../lib/contact';
+import { buildWhatsAppLink, buildMailtoLink, CONCIERGE_PHONE, CONCIERGE_TEAM_NAME } from '../lib/contact';
 
 interface ActiveBookingsListProps {
   bookings: BookingConfirmation[];
@@ -58,7 +58,7 @@ export const ActiveBookingsList: React.FC<ActiveBookingsListProps> = ({
       <div className="flex items-center justify-between mb-8">
         <div>
           <h2 className="font-serif-luxury text-3xl font-bold text-stone-900">
-            My Concierge Reservations & Inquiries
+            My Booking Requests & Inquiries
           </h2>
           <p className="text-stone-500 text-xs sm:text-sm mt-1">
             Access your personalized cue cards, vendor squad contacts, and tailored bespoke briefs.
@@ -136,19 +136,15 @@ export const ActiveBookingsList: React.FC<ActiveBookingsListProps> = ({
 
               <div className="pt-3 border-t border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
-                  <img
-                    src={inquiry.assignedConcierge.avatar}
-                    alt={inquiry.assignedConcierge.name}
-                    className="w-7 h-7 rounded-full object-cover border border-rose-400"
-                  />
+                  <HeartHandshake className="w-5 h-5 text-rose-400 flex-shrink-0" />
                   <span className="text-xs text-stone-200">
-                    Lead Director: <strong>{inquiry.assignedConcierge.name}</strong>
+                    Handled by: <strong>{CONCIERGE_TEAM_NAME}</strong>
                   </span>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <a
-                    href={inquiry.whatsappQuickLink}
+                    href={buildWhatsAppLink(CONCIERGE_PHONE, `Hi Cherish! Following up on my bespoke inquiry #${inquiry.inquiryId} for a ${inquiry.occasion}.`)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition"
@@ -159,7 +155,7 @@ export const ActiveBookingsList: React.FC<ActiveBookingsListProps> = ({
                   <a
                     href={buildMailtoLink(
                       `Bespoke Inquiry #${inquiry.inquiryId}`,
-                      `Hi ${inquiry.assignedConcierge.name},\n\nFollowing up on my bespoke inquiry #${inquiry.inquiryId} for a ${inquiry.occasion}.\n\nThanks!`
+                      `Hi Cherish,\n\nFollowing up on my bespoke inquiry #${inquiry.inquiryId} for a ${inquiry.occasion}.\n\nThanks!`
                     )}
                     className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition"
                   >
@@ -180,7 +176,7 @@ export const ActiveBookingsList: React.FC<ActiveBookingsListProps> = ({
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500" />
               <h3 className="text-xs font-bold uppercase tracking-wider text-stone-700">
-                Confirmed Reservations ({bookings.length})
+                Booking Requests ({bookings.length})
               </h3>
             </div>
           )}
@@ -195,18 +191,18 @@ export const ActiveBookingsList: React.FC<ActiveBookingsListProps> = ({
                 <div>
                   <div className="flex items-center gap-2 mb-1">
                     <span className="text-xs font-mono font-bold text-rose-700">{booking.bookingId}</span>
-                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full">
-                      <ShieldCheck className="w-3 h-3 text-emerald-600" />
-                      Deposit Confirmed
+                    <span className="inline-flex items-center gap-1 text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full">
+                      <ShieldCheck className="w-3 h-3 text-amber-600" />
+                      Request Received
                     </span>
                   </div>
                   <h4 className="font-serif-luxury text-xl sm:text-2xl font-bold text-stone-900 group-hover:text-rose-700 transition">
-                    {booking.plan?.conceptTitle || `${booking.selectedTier} Reservation`}
+                    {booking.plan?.conceptTitle || `${booking.selectedTier} Request`}
                   </h4>
                 </div>
 
                 <div className="text-left sm:text-right">
-                  <span className="text-xs text-stone-500 block">Deposit Paid:</span>
+                  <span className="text-xs text-stone-500 block">Deposit to Secure:</span>
                   <span className="text-lg font-bold text-stone-900">R{booking.depositPaid.toLocaleString()}</span>
                 </div>
               </div>
@@ -228,34 +224,30 @@ export const ActiveBookingsList: React.FC<ActiveBookingsListProps> = ({
 
               <div className="mt-4 pt-4 border-t border-stone-100 flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <img
-                    src={booking.assignedConcierge.avatar}
-                    alt={booking.assignedConcierge.name}
-                    className="w-7 h-7 rounded-full object-cover border border-rose-200"
-                  />
+                  <HeartHandshake className="w-5 h-5 text-rose-600 flex-shrink-0" />
                   <span className="text-xs text-stone-700">
-                    Concierge Director: <strong>{booking.assignedConcierge.name}</strong>
+                    Handled by: <strong>{CONCIERGE_TEAM_NAME}</strong>
                   </span>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <a
                     href={buildWhatsAppLink(
-                      booking.assignedConcierge.phone,
-                      `Hi ${booking.assignedConcierge.name}! Following up on my booking ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.`
+                      CONCIERGE_PHONE,
+                      `Hi Cherish! Following up on my booking ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.`
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
                     className="p-2 rounded-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 transition"
-                    aria-label={`WhatsApp ${booking.assignedConcierge.name}`}
+                    aria-label="WhatsApp us"
                   >
                     <MessageSquare className="w-3.5 h-3.5" />
                   </a>
                   <a
                     href={buildMailtoLink(
                       `Booking ${booking.bookingId}`,
-                      `Hi ${booking.assignedConcierge.name},\n\nFollowing up on my booking ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.\n\nThanks!`
+                      `Hi Cherish,\n\nFollowing up on my booking ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.\n\nThanks!`
                     )}
                     onClick={(e) => e.stopPropagation()}
                     className="p-2 rounded-full bg-rose-50 hover:bg-rose-100 text-rose-700 transition"
@@ -264,7 +256,7 @@ export const ActiveBookingsList: React.FC<ActiveBookingsListProps> = ({
                     <Mail className="w-3.5 h-3.5" />
                   </a>
                   <span className="flex items-center gap-1 text-xs font-semibold text-rose-600 group-hover:translate-x-1 transition-transform">
-                    <span>View Full Cue Card</span>
+                    <span>View Details</span>
                     <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </div>

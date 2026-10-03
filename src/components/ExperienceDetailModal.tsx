@@ -110,7 +110,7 @@ export const ExperienceDetailModal: React.FC<ExperienceDetailModalProps> = ({
             <div className="flex items-baseline gap-2">
               <span className="text-xl sm:text-2xl font-bold text-stone-900">R{experience.startingPrice.toLocaleString()}</span>
               <span className="text-xs text-emerald-700 font-semibold bg-emerald-100 px-2 py-0.5 rounded-full">
-                R{experience.depositPrice.toLocaleString()} Deposit to Lock
+                R{experience.depositPrice.toLocaleString()} Deposit
               </span>
             </div>
           </div>

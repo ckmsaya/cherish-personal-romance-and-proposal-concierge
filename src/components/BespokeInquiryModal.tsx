@@ -15,9 +15,9 @@ import {
   HeartHandshake,
   UserCheck
 } from 'lucide-react';
-import { BespokeInquiry, ConciergeAgent } from '../types';
+import { BespokeInquiry } from '../types';
 import { getDeviceId } from '../lib/deviceId';
-import { buildWhatsAppLink, buildMailtoLink } from '../lib/contact';
+import { buildWhatsAppLink, buildMailtoLink, CONCIERGE_PHONE, CONCIERGE_EMAIL, CONCIERGE_TEAM_NAME } from '../lib/contact';
 
 interface BespokeInquiryModalProps {
   isOpen: boolean;
@@ -124,8 +124,8 @@ export const BespokeInquiryModal: React.FC<BespokeInquiryModalProps> = ({
     }
   };
 
-  const handleOpenDirectWhatsApp = (concierge?: ConciergeAgent) => {
-    const phone = concierge ? concierge.phone : '27646261102';
+  const handleOpenDirectWhatsApp = () => {
+    const phone = CONCIERGE_PHONE;
     const text = `Hi Cherish Concierge Team! I want something unique tailored for a ${occasion}. My name is ${clientName || 'a client'}. Can we chat about creating a custom experience?`;
     window.open(buildWhatsAppLink(phone, text), '_blank');
   };
@@ -184,29 +184,22 @@ export const BespokeInquiryModal: React.FC<BespokeInquiryModalProps> = ({
                   We've Received Your Vision!
                 </h3>
                 <p className="text-stone-600 text-xs sm:text-sm mt-2 max-w-md mx-auto leading-relaxed">
-                  Lekker! Your unique concept has been handed to our Senior Concierge Director. We will review every nuance and reach out via your preferred channel within 2 hours.
+                  Lekker! Your brief has been sent to our team. We'll review it and get back to you via your preferred channel, usually within one business day.
                 </p>
               </div>
 
-              {/* Assigned Director Card */}
+              {/* Contact Card */}
               <div className="bg-stone-50 border border-stone-200 rounded-2xl p-5 text-left flex flex-col sm:flex-row items-center gap-4">
-                <img
-                  src={submittedInquiry.assignedConcierge.avatar}
-                  alt={submittedInquiry.assignedConcierge.name}
-                  className="w-16 h-16 rounded-2xl object-cover border border-stone-300"
-                />
+                <div className="w-16 h-16 rounded-2xl bg-rose-100 text-rose-700 border border-rose-200 flex items-center justify-center flex-shrink-0">
+                  <HeartHandshake className="w-8 h-8" />
+                </div>
                 <div className="flex-1 text-center sm:text-left">
                   <span className="text-[10px] font-bold text-rose-600 uppercase tracking-wider block">
-                    Your Assigned Lead Director
+                    Who You'll Hear From
                   </span>
-                  <h4 className="text-base font-bold text-stone-900">
-                    {submittedInquiry.assignedConcierge.name}
-                  </h4>
-                  <p className="text-xs text-stone-500 mb-2">
-                    {submittedInquiry.assignedConcierge.title}
-                  </p>
+                  <h4 className="text-base font-bold text-stone-900">{CONCIERGE_TEAM_NAME}</h4>
                   <p className="text-xs text-stone-600 leading-normal">
-                    {submittedInquiry.assignedConcierge.bio}
+                    WhatsApp {CONCIERGE_PHONE} or email {CONCIERGE_EMAIL}. Quote reference #{submittedInquiry.inquiryId}.
                   </p>
                 </div>
               </div>
@@ -220,14 +213,14 @@ export const BespokeInquiryModal: React.FC<BespokeInquiryModalProps> = ({
                   className="w-full flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl bg-emerald-600 hover:bg-emerald-700 active:scale-98 text-white font-semibold text-sm shadow-md shadow-emerald-200 transition"
                 >
                   <MessageSquare className="w-4 h-4" />
-                  <span>Start WhatsApp Chat with {submittedInquiry.assignedConcierge.name}</span>
+                  <span>Start WhatsApp Chat With Us</span>
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </a>
 
                 <a
                   href={buildMailtoLink(
                     `Bespoke Inquiry #${submittedInquiry.inquiryId}`,
-                    `Hi ${submittedInquiry.assignedConcierge.name},\n\nFollowing up on my bespoke inquiry #${submittedInquiry.inquiryId} for a ${submittedInquiry.occasion}.\n\nThanks!`
+                    `Hi Cherish,\n\nFollowing up on my bespoke inquiry #${submittedInquiry.inquiryId} for a ${submittedInquiry.occasion}.\n\nThanks!`
                   )}
                   className="w-full flex items-center justify-center gap-2 py-3 px-6 rounded-2xl bg-stone-100 hover:bg-stone-200 text-stone-800 font-semibold text-xs transition"
                 >
@@ -245,7 +238,7 @@ export const BespokeInquiryModal: React.FC<BespokeInquiryModalProps> = ({
 
               <div className="flex items-center justify-center gap-2 text-xs text-stone-400 pt-2 border-t border-stone-100">
                 <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                <span>100% Confidential & Under Discretion Protocol</span>
+                <span>Your idea stays private between you and our team</span>
               </div>
             </div>
           ) : (
@@ -468,7 +461,7 @@ export const BespokeInquiryModal: React.FC<BespokeInquiryModalProps> = ({
                   className="w-full sm:flex-1 flex items-center justify-center gap-2 py-3.5 px-6 rounded-2xl bg-rose-600 hover:bg-rose-700 active:scale-98 text-white font-semibold text-xs sm:text-sm shadow-md shadow-rose-200 transition disabled:opacity-60 cursor-pointer"
                 >
                   {isSubmitting ? (
-                    <span>Assigning Director & Dispatching Brief...</span>
+                    <span>Sending Your Brief...</span>
                   ) : (
                     <>
                       <Send className="w-4 h-4" />

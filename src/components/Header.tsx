@@ -71,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, booking
                   : 'text-stone-600 hover:text-stone-900'
               }`}
             >
-              Services & Deposit
+              Services & Booking
             </button>
             <button
               id="nav-bookings-btn"
@@ -143,7 +143,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, booking
               activeTab === 'customizer' ? 'bg-stone-900 text-white' : 'text-stone-600 bg-stone-100'
             }`}
           >
-            Deposit
+            Book
           </button>
           <button
             onClick={() => setActiveTab('my_bookings')}

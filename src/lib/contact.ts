@@ -1,4 +1,6 @@
 export const CONCIERGE_EMAIL = 'ckmsaya@gmail.com';
+export const CONCIERGE_PHONE = '+27 64 626 1102';
+export const CONCIERGE_TEAM_NAME = 'Cherish Concierge Team';
 
 export function buildWhatsAppLink(phone: string, message: string): string {
   const cleanPhone = phone.replace(/[^0-9]/g, '');

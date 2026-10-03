@@ -20,7 +20,7 @@ export const SERVICE_TIERS: ServiceTierOption[] = [
   {
     id: 'enchanted',
     name: 'Enchanted Experience',
-    badge: 'Most Popular Mzansi Choice',
+    badge: 'Signature Package',
     basePrice: 6800,
     depositAmount: 1600,
     description: 'Our signature fully orchestrated date, luxury Cape or coastal picnic, or romantic sunset proposal.',

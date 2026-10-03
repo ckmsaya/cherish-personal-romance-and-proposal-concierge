@@ -1,7 +1,13 @@
 import React from 'react';
-import { CheckCircle2, ShieldCheck, Mail, Calendar, Clock, MapPin, Download, Heart, ArrowRight, Printer, Sparkles, UserCheck, MessageSquare } from 'lucide-react';
+import { CheckCircle2, ShieldCheck, Mail, Calendar, Clock, MapPin, Heart, Printer, HeartHandshake, MessageSquare } from 'lucide-react';
 import { BookingConfirmation } from '../types';
-import { buildWhatsAppLink, buildMailtoLink } from '../lib/contact';
+import { buildWhatsAppLink, buildMailtoLink, CONCIERGE_PHONE, CONCIERGE_EMAIL, CONCIERGE_TEAM_NAME } from '../lib/contact';
+
+const NEXT_STEPS = [
+  'We check availability for your date, location, and the vendors you selected.',
+  'We contact you on WhatsApp or email to confirm the details and send deposit payment instructions.',
+  'Your date is secured once your deposit is received. No payment is taken on this website.',
+];
 
 interface BookingConfirmationViewProps {
   booking: BookingConfirmation;
@@ -26,13 +32,13 @@ export const BookingConfirmationView: React.FC<BookingConfirmationViewProps> = (
           <CheckCircle2 className="w-9 h-9" />
         </div>
         <span className="inline-block px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold mb-2">
-          Deposit Confirmed & Vendors Locked
+          Booking Request Received
         </span>
         <h2 className="font-serif-luxury text-3xl sm:text-5xl font-bold text-stone-900 tracking-tight mb-3">
-          Take a Deep Breath. We’ve Got It From Here.
+          Thank You. We’ve Got Your Request.
         </h2>
         <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
-          Your reservation deposit is processed. Your dedicated concierge director has been assigned and is already locking in your vendors, cue cards, and site permits.
+          Nothing has been charged. We’ll check availability for your date and contact you on WhatsApp or email to confirm the details and send deposit payment instructions.
         </p>
       </div>
 
@@ -44,7 +50,7 @@ export const BookingConfirmationView: React.FC<BookingConfirmationViewProps> = (
             <div className="flex items-center gap-2 mb-1">
               <span className="font-serif-luxury text-2xl font-bold">Cherish Concierge</span>
               <span className="text-[11px] font-semibold bg-rose-600 text-white px-2 py-0.5 rounded-full">
-                VIP Reservation
+                Booking Request
               </span>
             </div>
             <p className="text-xs text-stone-400">
@@ -58,48 +64,46 @@ export const BookingConfirmationView: React.FC<BookingConfirmationViewProps> = (
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold transition"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>Print Cue Sheet</span>
+              <span>Print Summary</span>
             </button>
           </div>
         </div>
 
-        {/* Assigned Concierge Director Banner */}
+        {/* Contact Banner */}
         <div className="p-6 bg-gradient-to-r from-rose-50/80 via-white to-stone-50 border-b border-stone-100 flex flex-col sm:flex-row items-center sm:items-start gap-4">
-          <img
-            src={booking.assignedConcierge.avatar}
-            alt={booking.assignedConcierge.name}
-            className="w-16 h-16 rounded-2xl object-cover border-2 border-rose-200 shadow-sm flex-shrink-0"
-          />
+          <div className="w-16 h-16 rounded-2xl bg-rose-100 text-rose-700 border-2 border-rose-200 flex items-center justify-center flex-shrink-0">
+            <HeartHandshake className="w-8 h-8" />
+          </div>
           <div className="text-center sm:text-left flex-1">
-            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-1">
-              <span className="text-xs font-bold text-rose-800 uppercase tracking-wider">
-                Your Dedicated Personal Concierge:
-              </span>
-              <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full">
-                <UserCheck className="w-3 h-3" /> Assigned
-              </span>
-            </div>
-            <h4 className="text-lg font-bold text-stone-900">{booking.assignedConcierge.name}</h4>
-            <p className="text-xs text-stone-500 font-medium">{booking.assignedConcierge.title}</p>
-            <p className="text-xs text-stone-600 mt-1.5 leading-relaxed">{booking.assignedConcierge.bio}</p>
+            <span className="text-xs font-bold text-rose-800 uppercase tracking-wider block mb-1">
+              Questions About Your Booking?
+            </span>
+            <h4 className="text-lg font-bold text-stone-900">{CONCIERGE_TEAM_NAME}</h4>
+            <p className="text-xs text-stone-600 mt-1.5 leading-relaxed">
+              WhatsApp {CONCIERGE_PHONE} or email {CONCIERGE_EMAIL}. Quote your booking reference so we can find your request quickly.
+            </p>
 
-            <div className="mt-3 flex flex-wrap items-center gap-2">
+            <div className="mt-3 flex flex-wrap items-center justify-center sm:justify-start gap-2">
               <a
                 href={buildWhatsAppLink(
-                  booking.assignedConcierge.phone,
-                  `Hi ${booking.assignedConcierge.name}! Following up on my booking ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.`
+                  CONCIERGE_PHONE,
+                  `Hi Cherish! Following up on my booking request ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.`
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 px-3 py-1.5 rounded-xl transition"
               >
                 <MessageSquare className="w-3.5 h-3.5" />
-                <span>WhatsApp {booking.assignedConcierge.name}</span>
+                <span>WhatsApp Us</span>
               </a>
               <a
                 href={buildMailtoLink(
                   `Booking ${booking.bookingId}`,
-                  `Hi ${booking.assignedConcierge.name},\n\nFollowing up on my booking ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.\n\nThanks!`
+                  `Hi Cherish,
+
+Following up on my booking request ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.
+
+Thanks!`
                 )}
                 className="inline-flex items-center gap-2 text-xs font-semibold text-rose-900 bg-rose-100/70 hover:bg-rose-200 px-3 py-1.5 rounded-xl transition"
               >
@@ -122,7 +126,7 @@ export const BookingConfirmationView: React.FC<BookingConfirmationViewProps> = (
               <div className="flex items-center gap-2.5 p-3 bg-stone-50 rounded-xl">
                 <Calendar className="w-4 h-4 text-rose-600 flex-shrink-0" />
                 <div>
-                  <span className="text-stone-400 block text-[10px]">Reserved Date:</span>
+                  <span className="text-stone-400 block text-[10px]">Requested Date:</span>
                   <span className="font-bold text-stone-900 text-sm">{booking.eventDate}</span>
                 </div>
               </div>
@@ -158,7 +162,7 @@ export const BookingConfirmationView: React.FC<BookingConfirmationViewProps> = (
           {/* Payment & Deposit Summary */}
           <div className="space-y-4">
             <h5 className="text-xs font-bold text-stone-400 uppercase tracking-wider">
-              Deposit Payment Receipt
+              Cost Estimate
             </h5>
 
             <div className="p-4 bg-stone-50 rounded-2xl border border-stone-200 space-y-2.5 text-xs">
@@ -167,17 +171,13 @@ export const BookingConfirmationView: React.FC<BookingConfirmationViewProps> = (
                 <span className="font-bold text-stone-900">{booking.selectedTier}</span>
               </div>
               <div className="flex items-center justify-between text-stone-600">
-                <span>Receipt Number:</span>
-                <span className="font-mono text-stone-800">{booking.depositReceiptNumber}</span>
-              </div>
-              <div className="flex items-center justify-between text-stone-600">
                 <span>Total Estimated Cost:</span>
                 <span className="font-bold text-stone-900">R{booking.totalEstimatedAmount.toLocaleString()}</span>
               </div>
 
               <div className="pt-2 border-t border-stone-200 flex items-center justify-between text-sm">
-                <span className="font-bold text-emerald-800">Deposit Paid Today:</span>
-                <span className="font-bold text-emerald-700 text-base">R{booking.depositPaid.toLocaleString()}</span>
+                <span className="font-bold text-stone-900">Deposit to Secure Date:</span>
+                <span className="font-bold text-rose-700 text-base">R{booking.depositPaid.toLocaleString()}</span>
               </div>
 
               <div className="pt-1 flex items-center justify-between text-[11px] text-stone-500">
@@ -186,9 +186,9 @@ export const BookingConfirmationView: React.FC<BookingConfirmationViewProps> = (
               </div>
             </div>
 
-            <div className="flex items-center gap-2 p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-800">
-              <ShieldCheck className="w-4 h-4 text-emerald-600 flex-shrink-0" />
-              <span>Full weather backup location & 72-hour cancellation policy active.</span>
+            <div className="flex items-center gap-2 p-3 bg-stone-50 rounded-xl border border-stone-200 text-xs text-stone-700">
+              <ShieldCheck className="w-4 h-4 text-stone-500 flex-shrink-0" />
+              <span>Nothing has been charged. Final pricing is confirmed with you before any payment.</span>
             </div>
           </div>
         </div>
@@ -240,7 +240,7 @@ export const BookingConfirmationView: React.FC<BookingConfirmationViewProps> = (
             What Happens Next:
           </h5>
           <ul className="space-y-2">
-            {booking.nextSteps.map((step, idx) => (
+            {NEXT_STEPS.map((step, idx) => (
               <li key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-stone-700">
                 <span className="flex-shrink-0 w-5 h-5 rounded-full bg-rose-100 text-rose-800 font-bold text-xs flex items-center justify-center">
                   {idx + 1}
@@ -258,7 +258,7 @@ export const BookingConfirmationView: React.FC<BookingConfirmationViewProps> = (
           onClick={onViewAllBookings}
           className="w-full sm:w-auto px-6 py-3 rounded-full bg-stone-900 text-white text-xs font-semibold hover:bg-stone-800 transition text-center"
         >
-          View All My Itineraries
+          View All My Requests
         </button>
         <button
           onClick={onPlanAnother}

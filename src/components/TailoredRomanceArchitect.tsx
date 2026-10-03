@@ -503,17 +503,17 @@ export const TailoredRomanceArchitect: React.FC<TailoredRomanceArchitectProps> =
             </div>
           </div>
 
-          {/* Action: Lock In Plan & Pay Deposit */}
+          {/* Action: Request a Booking With This Plan */}
           <div className="bg-stone-900 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-xl">
             <div>
               <span className="text-xs font-bold text-rose-300 uppercase tracking-wider block mb-1">
                 Ready to make it happen?
               </span>
               <h4 className="font-serif-luxury text-2xl sm:text-3xl font-bold leading-tight">
-                Lock In This Plan with a Dedicated Concierge
+                Turn This Plan Into a Booking
               </h4>
               <p className="text-stone-300 text-xs sm:text-sm mt-1 max-w-lg">
-                Pay the modest reservation deposit to hold your date and dispatch our vendor squad. You pay the remaining balance on the event day.
+                Send us a booking request with this plan attached. We confirm availability and pricing with you first; nothing is charged online.
               </p>
             </div>
 
@@ -521,7 +521,7 @@ export const TailoredRomanceArchitect: React.FC<TailoredRomanceArchitectProps> =
               onClick={() => onProceedToBookingWithPlan(generatedPlan)}
               className="w-full sm:w-auto flex-shrink-0 flex items-center justify-center gap-2 px-7 py-4 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-sm shadow-lg shadow-rose-900/50 active:scale-98 transition cursor-pointer"
             >
-              <span>Lock In Plan & Pay Deposit</span>
+              <span>Request a Booking With This Plan</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
