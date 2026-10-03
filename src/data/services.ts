@@ -133,7 +133,7 @@ export const PRE_DESIGNED_EXPERIENCES: PreDesignedExperience[] = [
     defaultPartnerInterests: ['Specialty Coffee', 'Indie Books', 'Artisanal Sweets', 'Art & Culture'],
     sampleScriptSnippet: '"I could pretend running into you here was an accident, but honestly, I\'ve wanted to take you out for dinner all week. Coffee is on me today—dinner tomorrow?"',
     includedVendors: ['Concierge Timing Coordinator', 'Artisan Baker or Florist', 'Personal Calligrapher'],
-    stressReliefFact: '94% of people find low-pressure, thoughtful surprises significantly more endearing than a plain WhatsApp text.',
+    stressReliefFact: 'No awkward rehearsed speech needed. We set the scene and give you a short script, so you just show up and ask.',
   },
   {
     id: 'exp-wedding-proposal',

@@ -108,7 +108,7 @@ export const BespokeTailoringSection: React.FC<BespokeTailoringSectionProps> = (
               </div>
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                <span>100% weather backup plan guarantee included.</span>
+                <span>Sheltered backup option planned for outdoor setups.</span>
               </div>
             </div>
 
@@ -146,7 +146,7 @@ export const BespokeTailoringSection: React.FC<BespokeTailoringSectionProps> = (
 
             <div className="flex items-center justify-center gap-1.5 text-[11px] text-stone-400 pt-1">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Strict Discretion & NDA Protection Guaranteed</span>
+              <span>Your idea stays private between you and our team</span>
             </div>
           </div>
 

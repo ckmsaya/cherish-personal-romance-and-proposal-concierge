@@ -7,18 +7,20 @@ import { getDeviceId } from '../lib/deviceId';
 
 interface PlanCustomizerAndDepositProps {
   initialPlan?: ProposalPlan | null;
+  initialTier?: ScaleTier | null;
   onBookingSuccess: (booking: BookingConfirmation) => void;
 }
 
 export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> = ({
   initialPlan,
+  initialTier,
   onBookingSuccess,
 }) => {
   const [selectedOccasion, setSelectedOccasion] = useState<OccasionType>(
     initialPlan?.occasion || 'wedding_proposal'
   );
   const [selectedTierId, setSelectedTierId] = useState<ScaleTier>(
-    initialPlan?.scaleTier || 'enchanted'
+    initialPlan?.scaleTier || initialTier || 'enchanted'
   );
   const [selectedAddonIds, setSelectedAddonIds] = useState<string[]>([]);
 
@@ -455,7 +457,7 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
                   />
                 </div>
 
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   <input
                     type="tel"
                     value={clientPhone}

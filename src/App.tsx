@@ -9,11 +9,13 @@ import { BookingConfirmationView } from './components/BookingConfirmationView';
 import { ActiveBookingsList } from './components/ActiveBookingsList';
 import { BespokeTailoringSection } from './components/BespokeTailoringSection';
 import { BespokeInquiryModal } from './components/BespokeInquiryModal';
+import { HowItWorksSection, PricingSection, AreasSection } from './components/HomeSections';
+import { FloatingWhatsApp } from './components/FloatingWhatsApp';
 import { PRE_DESIGNED_EXPERIENCES } from './data/services';
-import { BookingConfirmation, OccasionType, PreDesignedExperience, ProposalPlan, BespokeInquiry } from './types';
+import { BookingConfirmation, OccasionType, PreDesignedExperience, ProposalPlan, BespokeInquiry, ScaleTier } from './types';
 import { HeartHandshake, Phone, Mail, ShieldCheck, Sparkles, ChevronDown, CheckCircle2, HelpCircle } from 'lucide-react';
 import { getDeviceId } from './lib/deviceId';
-import { buildWhatsAppLink } from './lib/contact';
+import { buildWhatsAppLink, CONCIERGE_PHONE } from './lib/contact';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<'catalog' | 'ai_architect' | 'customizer' | 'my_bookings' | 'confirmation'>('catalog');
@@ -22,6 +24,9 @@ export default function App() {
   
   // Custom AI plan that can be transferred to the customizer & deposit flow
   const [customPlanForBooking, setCustomPlanForBooking] = useState<ProposalPlan | null>(null);
+
+  // Package chosen from the pricing section, preselected in the booking form
+  const [preselectedTier, setPreselectedTier] = useState<ScaleTier | null>(null);
   
   // Confirmed booking for the voucher view
   const [confirmedBooking, setConfirmedBooking] = useState<BookingConfirmation | null>(null);
@@ -80,7 +85,7 @@ export default function App() {
   const handleOpenWhatsAppDirect = () => {
     window.open(
       buildWhatsAppLink(
-        '27646261102',
+        CONCIERGE_PHONE,
         'Hi Cherish Concierge Team! I want something unique tailored for our special romantic moment. Can we chat about creating a custom experience?'
       ),
       '_blank'
@@ -131,6 +136,13 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  const handleSelectTier = (tier: ScaleTier) => {
+    setCustomPlanForBooking(null);
+    setPreselectedTier(tier);
+    setActiveTab('customizer');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handlePlanGenerated = (plan: ProposalPlan) => {
     setCustomPlanForBooking(plan);
   };
@@ -169,8 +181,16 @@ export default function App() {
       a: 'Send us a booking request online. Nothing is charged on the website. We confirm availability with you on WhatsApp or email, then send EFT details for the deposit (R450 for Sweet Touch, R1,600 for Enchanted, R4,500 for Cinematic). Your date is secured once the deposit is received, and the balance is paid on the day of the event.',
     },
     {
+      q: 'Which areas do you cover?',
+      a: 'We plan across Cape Town, the Cape Winelands, Johannesburg, Pretoria, Durban and the North Coast, and the Garden Route. Somewhere else in South Africa? Send us your idea and we will tell you what is possible.',
+    },
+    {
+      q: 'How far in advance should I book?',
+      a: 'The earlier the better, especially for weekends, sunset slots and popular venues. For proposals we recommend reaching out a few weeks ahead. Planning something sooner? WhatsApp us and we will tell you honestly what we can do.',
+    },
+    {
       q: 'How does the secret candid photographer hide?',
-      a: 'Our photographers use high-end 70-200mm telephoto lenses from 50+ yards away, blending in as casual park-goers, tourists, or birdwatchers. Your partner will have zero clue they are being photographed until after the emotional moment is complete and you point them out for portraits.',
+      a: 'Our photographers use high-end 70-200mm telephoto lenses from a comfortable distance, blending in as casual park-goers, tourists, or birdwatchers. Your partner will have zero clue they are being photographed until after the emotional moment is complete and you point them out for portraits.',
     },
     {
       q: 'What if the weather turns bad on the proposal day?',
@@ -208,6 +228,7 @@ export default function App() {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               onOpenCustomizer={() => {
+                setPreselectedTier(null);
                 setActiveTab('customizer');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
@@ -241,11 +262,17 @@ export default function App() {
                 ))}
               </div>
 
+              <HowItWorksSection />
+
+              <PricingSection onSelectTier={handleSelectTier} />
+
               {/* Want Something Unique? Dedicated Custom Tailoring Section */}
               <BespokeTailoringSection
                 onOpenBespokeModal={() => setIsBespokeModalOpen(true)}
                 onOpenWhatsAppDirect={handleOpenWhatsAppDirect}
               />
+
+              <AreasSection />
 
               {/* Stress-Free Reassurance Banner */}
               <div className="mt-16 bg-gradient-to-br from-rose-900 via-rose-950 to-stone-950 text-white rounded-3xl p-8 sm:p-12 relative overflow-hidden shadow-xl">
@@ -350,6 +377,7 @@ export default function App() {
         {activeTab === 'customizer' && (
           <PlanCustomizerAndDeposit
             initialPlan={customPlanForBooking}
+            initialTier={preselectedTier}
             onBookingSuccess={handleBookingSuccess}
           />
         )}
@@ -400,8 +428,10 @@ export default function App() {
         onInquirySubmitted={handleBespokeInquirySubmitted}
       />
 
+      <FloatingWhatsApp />
+
       {/* Footer */}
-      <footer className="bg-stone-900 text-stone-300 border-t border-stone-800 pt-12 pb-8">
+      <footer className="bg-stone-900 text-stone-300 border-t border-stone-800 pt-12 pb-24 sm:pb-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
             <div className="md:col-span-2 space-y-4">
