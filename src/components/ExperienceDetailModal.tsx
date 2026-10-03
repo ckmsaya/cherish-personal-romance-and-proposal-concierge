@@ -106,13 +106,8 @@ export const ExperienceDetailModal: React.FC<ExperienceDetailModalProps> = ({
         {/* Modal Sticky Footer */}
         <div className="p-4 sm:p-5 border-t border-stone-200 bg-stone-50/90 flex-shrink-0 flex items-center justify-between gap-4">
           <div>
-            <span className="text-xs text-stone-500 block">Package price from</span>
-            <div className="flex items-baseline gap-2">
-              <span className="text-xl sm:text-2xl font-bold text-stone-900">R{experience.startingPrice.toLocaleString()}</span>
-              <span className="text-xs text-emerald-700 font-semibold bg-emerald-100 px-2 py-0.5 rounded-full">
-                R{experience.depositPrice.toLocaleString()} Deposit
-              </span>
-            </div>
+            <span className="text-sm font-bold text-stone-900 block">Priced to your plans</span>
+            <span className="text-xs text-stone-500">Free quote, no obligation</span>
           </div>
 
           <div className="flex items-center gap-2">
@@ -129,7 +124,7 @@ export const ExperienceDetailModal: React.FC<ExperienceDetailModalProps> = ({
               }}
               className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs sm:text-sm font-semibold shadow-sm active:scale-98 transition"
             >
-              <span>Customize & Book</span>
+              <span>Get a Free Quote</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

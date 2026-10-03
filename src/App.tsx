@@ -3,14 +3,15 @@ import { Header } from './components/Header';
 import { HeroBanner } from './components/HeroBanner';
 import { ExperienceCard } from './components/ExperienceCard';
 import { ExperienceDetailModal } from './components/ExperienceDetailModal';
-import { TailoredRomanceArchitect } from './components/TailoredRomanceArchitect';
+import { IdeaFinder } from './components/IdeaFinder';
 import { PlanCustomizerAndDeposit } from './components/PlanCustomizerAndDeposit';
 import { BookingConfirmationView } from './components/BookingConfirmationView';
 import { ActiveBookingsList } from './components/ActiveBookingsList';
 import { BespokeTailoringSection } from './components/BespokeTailoringSection';
 import { BespokeInquiryModal } from './components/BespokeInquiryModal';
-import { HowItWorksSection, PricingSection, AreasSection } from './components/HomeSections';
+import { HowItWorksSection, PackagesSection, AreasSection } from './components/HomeSections';
 import { FloatingWhatsApp } from './components/FloatingWhatsApp';
+import { TermsPage } from './components/TermsPage';
 import { PRE_DESIGNED_EXPERIENCES } from './data/services';
 import { BookingConfirmation, OccasionType, PreDesignedExperience, ProposalPlan, BespokeInquiry, ScaleTier } from './types';
 import { HeartHandshake, Phone, Mail, ShieldCheck, Sparkles, ChevronDown, CheckCircle2, HelpCircle } from 'lucide-react';
@@ -18,14 +19,14 @@ import { getDeviceId } from './lib/deviceId';
 import { buildWhatsAppLink, CONCIERGE_PHONE } from './lib/contact';
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<'catalog' | 'ai_architect' | 'customizer' | 'my_bookings' | 'confirmation'>('catalog');
+  const [activeTab, setActiveTab] = useState<'catalog' | 'idea_finder' | 'customizer' | 'my_bookings' | 'confirmation' | 'terms'>('catalog');
   const [selectedOccasion, setSelectedOccasion] = useState<OccasionType | 'all'>('all');
   const [selectedExperienceForModal, setSelectedExperienceForModal] = useState<PreDesignedExperience | null>(null);
   
-  // Custom AI plan that can be transferred to the customizer & deposit flow
+  // Experience plan carried into the quote request form
   const [customPlanForBooking, setCustomPlanForBooking] = useState<ProposalPlan | null>(null);
 
-  // Package chosen from the pricing section, preselected in the booking form
+  // Package chosen from the packages section, preselected in the quote form
   const [preselectedTier, setPreselectedTier] = useState<ScaleTier | null>(null);
   
   // Confirmed booking for the voucher view
@@ -143,13 +144,8 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const handlePlanGenerated = (plan: ProposalPlan) => {
-    setCustomPlanForBooking(plan);
-  };
-
-  const handleProceedToBookingWithPlan = (plan: ProposalPlan) => {
-    setCustomPlanForBooking(plan);
-    setActiveTab('customizer');
+  const openTerms = () => {
+    setActiveTab('terms');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -177,8 +173,8 @@ export default function App() {
       a: 'That is exactly why Cherish exists! We remove all the awkward stammering and logistics fear. We coordinate a charming, low-pressure moment—such as a custom coffee cup reveal, an artisanal chocolate drop, or an intimate picnic. You even receive a tailored word-for-word script and rehearsal coaching so you know exactly what to say.',
     },
     {
-      q: 'How does the deposit system work?',
-      a: 'Send us a booking request online. Nothing is charged on the website. We confirm availability with you on WhatsApp or email, then send EFT details for the deposit (R450 for Sweet Touch, R1,600 for Enchanted, R4,500 for Cinematic). Your date is secured once the deposit is received, and the balance is paid on the day of the event.',
+      q: 'How much does it cost, and how do I pay?',
+      a: 'Every surprise is different, so we price each one to your plans: the city, venue, package and extras. Request a free quote online or on WhatsApp and we will send it, usually within one business day. Nothing is charged on the website. If you accept, an EFT deposit secures your date and the balance is paid on the day of the event.',
     },
     {
       q: 'Which areas do you cover?',
@@ -198,7 +194,7 @@ export default function App() {
     },
     {
       q: 'Can I customize the proposal script or add our own inside jokes?',
-      a: 'Absolutely! Our AI Romance Architect drafts a starting script and cue sheet, and we refine it with you before the day.',
+      a: 'Absolutely! We write a starting script and cue sheet with you based on your story, and refine every line together before the day.',
     },
   ];
 
@@ -206,7 +202,7 @@ export default function App() {
     <div className="min-h-screen bg-stone-50 text-stone-900 flex flex-col selection:bg-rose-500 selection:text-white">
       {/* Main App Navigation Header */}
       <Header
-        activeTab={activeTab === 'confirmation' ? 'my_bookings' : activeTab}
+        activeTab={activeTab === 'confirmation' ? 'my_bookings' : activeTab === 'terms' ? 'catalog' : activeTab}
         setActiveTab={(tab) => {
           setActiveTab(tab);
           window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -223,8 +219,8 @@ export default function App() {
             <HeroBanner
               selectedOccasion={selectedOccasion}
               setSelectedOccasion={setSelectedOccasion}
-              onOpenAIArchitect={() => {
-                setActiveTab('ai_architect');
+              onOpenIdeaFinder={() => {
+                setActiveTab('idea_finder');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               onOpenCustomizer={() => {
@@ -264,7 +260,7 @@ export default function App() {
 
               <HowItWorksSection />
 
-              <PricingSection onSelectTier={handleSelectTier} />
+              <PackagesSection onSelectTier={handleSelectTier} />
 
               {/* Want Something Unique? Dedicated Custom Tailoring Section */}
               <BespokeTailoringSection
@@ -289,13 +285,13 @@ export default function App() {
                   <div className="flex flex-wrap gap-3">
                     <button
                       onClick={() => {
-                        setActiveTab('ai_architect');
+                        setActiveTab('idea_finder');
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }}
                       className="flex items-center gap-2 px-6 py-3 rounded-full bg-rose-600 hover:bg-rose-500 text-white text-xs sm:text-sm font-semibold shadow-md transition"
                     >
                       <Sparkles className="w-4 h-4 text-amber-300" />
-                      <span>Design a Custom Plan (AI)</span>
+                      <span>Find My Surprise</span>
                     </button>
                     <button
                       onClick={() => setIsBespokeModalOpen(true)}
@@ -311,7 +307,7 @@ export default function App() {
                       }}
                       className="px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold transition"
                     >
-                      Browse Services & Request a Booking
+                      Get a Free Quote
                     </button>
                   </div>
                 </div>
@@ -328,7 +324,7 @@ export default function App() {
                     Everything You Need to Know
                   </h3>
                   <p className="text-stone-500 text-sm mt-1">
-                    Have questions before booking? Just ask us on WhatsApp or email.
+                    Have a question? Just ask us on WhatsApp or email.
                   </p>
                 </div>
 
@@ -365,11 +361,12 @@ export default function App() {
           </div>
         )}
 
-        {/* TAB 2: AI Tailored Romance Architect */}
-        {activeTab === 'ai_architect' && (
-          <TailoredRomanceArchitect
-            onPlanGenerated={handlePlanGenerated}
-            onProceedToBookingWithPlan={handleProceedToBookingWithPlan}
+        {/* TAB 2: Find My Surprise questionnaire */}
+        {activeTab === 'idea_finder' && (
+          <IdeaFinder
+            onViewExperience={handleSelectExperienceForModal}
+            onRequestExperience={handleCustomizeExperience}
+            onOpenBespokeModal={() => setIsBespokeModalOpen(true)}
           />
         )}
 
@@ -378,6 +375,7 @@ export default function App() {
           <PlanCustomizerAndDeposit
             initialPlan={customPlanForBooking}
             initialTier={preselectedTier}
+            onOpenTerms={openTerms}
             onBookingSuccess={handleBookingSuccess}
           />
         )}
@@ -397,6 +395,8 @@ export default function App() {
             }}
           />
         )}
+
+        {activeTab === 'terms' && <TermsPage />}
 
         {/* TAB 5: My Booked Itineraries & Bespoke Inquiries */}
         {activeTab === 'my_bookings' && (
@@ -497,11 +497,11 @@ export default function App() {
                   <Sparkles className="w-3.5 h-3.5 text-amber-400" />
                   <span>Want Something Unique? Talk to Us</span>
                 </li>
-                <li className="hover:text-white cursor-pointer" onClick={() => { setActiveTab('ai_architect'); }}>
-                  AI Tailored Romance Architect
+                <li className="hover:text-white cursor-pointer" onClick={() => { setActiveTab('idea_finder'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>
+                  Find My Surprise
                 </li>
                 <li className="hover:text-white cursor-pointer" onClick={() => { setActiveTab('customizer'); }}>
-                  Request a Booking
+                  Get a Free Quote
                 </li>
                 <li className="hover:text-white cursor-pointer" onClick={() => { setSelectedOccasion('graduation_surprise'); setActiveTab('catalog'); }}>
                   Graduation Celebrations
@@ -514,7 +514,12 @@ export default function App() {
           </div>
 
           <div className="pt-8 border-t border-stone-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-stone-500">
-            <p>© {new Date().getFullYear()} Cherish Concierge. South Africa.</p>
+            <p>
+              © {new Date().getFullYear()} Cherish Concierge. South Africa. ·{' '}
+              <button onClick={openTerms} className="underline underline-offset-2 hover:text-white">
+                Terms &amp; Conditions
+              </button>
+            </p>
             <div className="flex items-center gap-4">
               <span className="flex items-center gap-1 text-emerald-400">
                 <ShieldCheck className="w-3.5 h-3.5" />

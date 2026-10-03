@@ -21,13 +21,13 @@ const STEPS = [
   },
   {
     icon: CalendarCheck,
-    title: 'We confirm & plan',
-    body: 'We check availability, then plan the details with you on WhatsApp or email: venue, styling, script.',
+    title: 'Get your free quote',
+    body: 'We check availability and send a personalised quote on WhatsApp or email, usually within one business day.',
   },
   {
     icon: Wallet,
     title: 'Secure your date',
-    body: 'Once you are happy with the plan, pay the deposit by EFT. Nothing is charged on this website.',
+    body: 'Happy with the quote? Pay the deposit by EFT to secure your date, then we plan every detail with you.',
   },
   {
     icon: PartyPopper,
@@ -63,16 +63,16 @@ export const HowItWorksSection: React.FC = () => (
   </section>
 );
 
-interface PricingSectionProps {
+interface PackagesSectionProps {
   onSelectTier: (tier: ScaleTier) => void;
 }
 
-export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) => (
-  <section id="pricing" className="mt-20 scroll-mt-24">
+export const PackagesSection: React.FC<PackagesSectionProps> = ({ onSelectTier }) => (
+  <section id="packages" className="mt-20 scroll-mt-24">
     <SectionHeading
-      eyebrow="Packages & pricing"
-      title="Clear pricing, in Rand"
-      subtitle="Every package is fully planned and run for you. Add extras like a musician or videographer when you request your booking."
+      eyebrow="Our packages"
+      title="Three ways to make it unforgettable"
+      subtitle="Every package is fully planned and run for you, and priced to your plans. Tell us what you have in mind and we will send you a free, no-obligation quote."
     />
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 items-stretch">
       {SERVICE_TIERS.map((tier) => {
@@ -97,12 +97,6 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) 
             <p className={`text-xs sm:text-sm mt-1 mb-5 leading-relaxed ${featured ? 'text-stone-300' : 'text-stone-600'}`}>
               {tier.description}
             </p>
-            <div className="mb-5">
-              <span className="text-4xl font-bold tracking-tight">R{tier.basePrice.toLocaleString()}</span>
-              <span className={`block text-xs mt-1 ${featured ? 'text-stone-400' : 'text-stone-500'}`}>
-                R{tier.depositAmount.toLocaleString()} deposit to secure your date, balance on the day
-              </span>
-            </div>
             <ul className="space-y-2.5 mb-7 flex-1">
               {tier.highlights.map((h) => (
                 <li key={h} className={`flex items-start gap-2 text-xs sm:text-sm ${featured ? 'text-stone-200' : 'text-stone-700'}`}>
@@ -122,7 +116,7 @@ export const PricingSection: React.FC<PricingSectionProps> = ({ onSelectTier }) 
                   : 'bg-stone-900 hover:bg-stone-800 text-white'
               }`}
             >
-              <span>Request {tier.name}</span>
+              <span>Get a Free Quote</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

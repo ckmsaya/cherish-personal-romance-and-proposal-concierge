@@ -2,8 +2,8 @@ import React from 'react';
 import { HeartHandshake, Sparkles, Calendar, BookOpen, ShieldCheck } from 'lucide-react';
 
 interface HeaderProps {
-  activeTab: 'catalog' | 'ai_architect' | 'customizer' | 'my_bookings';
-  setActiveTab: (tab: 'catalog' | 'ai_architect' | 'customizer' | 'my_bookings') => void;
+  activeTab: 'catalog' | 'idea_finder' | 'customizer' | 'my_bookings';
+  setActiveTab: (tab: 'catalog' | 'idea_finder' | 'customizer' | 'my_bookings') => void;
   bookingsCount: number;
   onOpenBespokeModal: () => void;
 }
@@ -51,16 +51,16 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, booking
               Curated Experiences
             </button>
             <button
-              id="nav-ai-architect-btn"
-              onClick={() => setActiveTab('ai_architect')}
+              id="nav-idea-finder-btn"
+              onClick={() => setActiveTab('idea_finder')}
               className={`flex items-center gap-1.5 px-4 py-2 rounded-full transition-all duration-150 ${
-                activeTab === 'ai_architect'
+                activeTab === 'idea_finder'
                   ? 'bg-gradient-to-r from-rose-600 to-pink-600 text-white shadow-xs'
                   : 'text-stone-600 hover:text-stone-900'
               }`}
             >
               <Sparkles className="w-3.5 h-3.5" />
-              <span>Tailored Romance Architect</span>
+              <span>Find My Surprise</span>
             </button>
             <button
               id="nav-customizer-btn"
@@ -71,7 +71,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, booking
                   : 'text-stone-600 hover:text-stone-900'
               }`}
             >
-              Services & Booking
+              Get a Quote
             </button>
             <button
               id="nav-bookings-btn"
@@ -104,7 +104,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, booking
             </button>
             <div className="hidden xl:flex items-center gap-1.5 text-xs text-stone-600 bg-stone-50 px-3 py-1.5 rounded-full border border-stone-200/80">
               <ShieldCheck className="w-4 h-4 text-emerald-600" />
-              <span>100% Discretion Guarantee</span>
+              <span>Your surprise stays private</span>
             </div>
           </div>
         </div>
@@ -127,15 +127,15 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, booking
             <span>Unique?</span>
           </button>
           <button
-            onClick={() => setActiveTab('ai_architect')}
+            onClick={() => setActiveTab('idea_finder')}
             className={`flex items-center gap-1 px-3 py-1.5 rounded-full whitespace-nowrap ${
-              activeTab === 'ai_architect'
+              activeTab === 'idea_finder'
                 ? 'bg-rose-600 text-white'
                 : 'text-stone-700 bg-rose-50 border border-rose-200/60'
             }`}
           >
             <Sparkles className="w-3 h-3 text-amber-300" />
-            <span>AI Architect</span>
+            <span>Find My Surprise</span>
           </button>
           <button
             onClick={() => setActiveTab('customizer')}
@@ -143,7 +143,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, booking
               activeTab === 'customizer' ? 'bg-stone-900 text-white' : 'text-stone-600 bg-stone-100'
             }`}
           >
-            Book
+            Quote
           </button>
           <button
             onClick={() => setActiveTab('my_bookings')}

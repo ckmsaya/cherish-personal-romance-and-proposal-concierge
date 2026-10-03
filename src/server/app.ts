@@ -27,97 +27,6 @@ export function createApiApp() {
   const app = express();
   app.use(express.json());
 
-  // POST /api/generate-plan: Tailored Proposal & Romantic Surprise Architect
-  app.post('/api/generate-plan', async (req, res) => {
-    try {
-      const {
-        partnerName = 'Partner',
-        scaleTier = 'enchanted',
-      } = req.body;
-
-      // Curated high-craft concierge template tailored to South African setting and scale
-      const fallbackPlan = {
-        conceptTitle: `The "${scaleTier === 'cinematic' ? 'Winelands Sunset Serenade' : scaleTier === 'sweet' ? 'Sweet Protea Note' : 'Enchanted Signal Hill'}" Surprise for ${partnerName}`,
-        tagline: `A seamless Mzansi romance curated with Cape Cap Classique, fynbos styling, and golden hour sunset views.`,
-        overview: `From the moment ${partnerName} arrives at the scenic overlook, every subtle detail feels effortlessly serendipitous. We handle the site permits, secret telephoto photography, ambient acoustic strings, and live WhatsApp cue cards behind the scenes so you can remain 100% relaxed.\n\nAs you arrive for sunset sundowners, our team discreetly signals the secret photographer stationed nearby to capture genuine tears and joy against the breathtaking South African landscape.`,
-        tailoredScript: {
-          stageDirection: `Take a gentle breath as the sunset turns golden over the horizon. Gently take both of ${partnerName}'s hands into yours. Pause for three seconds while the acoustic guitar softens.`,
-          whatToSay: `"${partnerName}, from the days we first shared our dreams together to all the laughter we've built, being with you makes every day in my life extraordinary. You inspire me with your heart and your incredible spirit. I don't just want this moment; I want all our tomorrows together. Will you take this next chapter with me?"`,
-          backupWords: `"${partnerName}, you have my whole heart, and I couldn't imagine doing this life with anyone else. I love you so much."`,
-        },
-        timeline: [
-          {
-            time: 'T-Minus 90 Min',
-            step: 'Vendor & Fynbos Styling',
-            details: 'Concierge arrives on-site to arrange King Proteas, glass hurricane lanterns, acoustic sound check, and wind shield setup.',
-            whoIsDoingWhat: 'Lead SA Concierge & Styling Squad',
-          },
-          {
-            time: 'T-Minus 20 Min',
-            step: 'WhatsApp Green-Light Check',
-            details: 'You receive a discreet WhatsApp confirmation that the setting is 100% prepared, private, and photographer in position.',
-            whoIsDoingWhat: 'Concierge WhatsApp Hotline',
-          },
-          {
-            time: 'The Moment (00:00)',
-            step: 'The Reveal & Proposal / Surprise',
-            details: 'You guide your partner to the sunset vantage point. The acoustic melody begins softly; you deliver your heartfelt words.',
-            whoIsDoingWhat: 'Client & Partner (Photographer shooting 200mm telephoto discreetly)',
-          },
-          {
-            time: '+15 Min',
-            step: 'Cap Classique Toast & Artisanal Board',
-            details: 'Chilled Méthode Cap Classique (Graham Beck / Pongrácz) uncorked with an artisanal Cape cheese and truffle grazing board.',
-            whoIsDoingWhat: 'Hospitality Captain & Florist Hand-off',
-          },
-          {
-            time: '+35 Min',
-            step: 'Golden Hour Portrait Mini-Shoot',
-            details: '20 minutes of relaxed, joyful portraits while the adrenaline and smiles are at their highest peak.',
-            whoIsDoingWhat: 'Lead Photographer & Director',
-          },
-        ],
-        vendorSquad: [
-          {
-            role: 'Lead Concierge Director',
-            serviceDescription: 'On-site live coordination, time-keeper, load-shedding battery backup, cue signaling.',
-            estimatedCost: 'Included in Service Tier',
-            status: 'Included',
-          },
-          {
-            role: 'Discreet Candid Photographer',
-            serviceDescription: 'Telephoto surprise coverage + 30-min sunset portrait session with high-res same-day preview gallery.',
-            estimatedCost: scaleTier === 'cinematic' ? 'R4,800' : 'R2,500',
-            status: 'Included in Concierge Dispatch',
-          },
-          {
-            role: 'Cape Floral & Protea Stylist',
-            serviceDescription: 'King Proteas, indigenous fynbos, hurricane glass lanterns, plush rugs, and complete pack-down.',
-            estimatedCost: scaleTier === 'cinematic' ? 'R5,500' : 'R2,200',
-            status: 'Included in Concierge Dispatch',
-          },
-          {
-            role: 'Live Acoustic Soloist (Guitar / Sax / Violin)',
-            serviceDescription: 'Performs 3 special requested songs as you approach and during the celebratory Cap Classique toast.',
-            estimatedCost: 'R2,200',
-            status: scaleTier === 'sweet' ? 'Optional Add-on' : 'Included in Concierge Dispatch',
-          },
-        ],
-        conciergeAdvice: [
-          'Do not rush your words: when your partner looks surprised, allow a few seconds for the beauty and emotion of the moment to settle.',
-          'Keep your phone on silent; your concierge will only vibrate your smartwatch or send quiet one-word status codes on WhatsApp.',
-          'Remember that nervousness is totally normal and endearing; genuine love always creates the best memory.',
-        ],
-        contingencyPlan: 'In the event of Cape Doctor gale-force winds or Highveld afternoon thunderstorms, our team holds a private sheltered wine cellar or covered botanical glasshouse alcove at zero surcharge.',
-      };
-
-      return res.json({ success: true, plan: fallbackPlan });
-    } catch (error) {
-      console.error('Server error generating plan:', error);
-      return res.status(500).json({ error: 'Failed to generate tailored proposal plan' });
-    }
-  });
-
   // POST /api/book-deposit: Secure Concierge Reservation & Deposit Lock
   app.post('/api/book-deposit', async (req, res) => {
     try {
@@ -146,7 +55,7 @@ export function createApiApp() {
 
       const booking = {
         bookingId,
-        status: 'Booking Request Received - Awaiting Deposit',
+        status: 'Quote Request Received',
         clientName,
         clientPhone,
         clientEmail,
@@ -166,9 +75,9 @@ export function createApiApp() {
         bookedAt: new Date().toISOString(),
         conciergeDirectChannel: `WhatsApp ${CONCIERGE_TEAM.phone}`,
         nextSteps: [
-          'We check availability for your date, location, and the vendors you selected.',
-          'We contact you on WhatsApp or email to confirm the details and send deposit payment instructions.',
-          'Your date is secured once your deposit is received. No payment is taken on this website.',
+          'We check availability for your date, location, and the extras you selected.',
+          'We send your personalised quote on WhatsApp or email, usually within one business day.',
+          'If you accept, an EFT deposit secures your date. No payment is taken on this website.',
         ],
         plan,
       };

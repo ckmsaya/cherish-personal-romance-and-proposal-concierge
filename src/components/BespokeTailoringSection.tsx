@@ -100,7 +100,7 @@ export const BespokeTailoringSection: React.FC<BespokeTailoringSectionProps> = (
             <div className="space-y-2.5 text-xs text-stone-200">
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                <span>Custom budget optimization & transparent vendor pricing.</span>
+                <span>A personalised quote that fits your budget.</span>
               </div>
               <div className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />

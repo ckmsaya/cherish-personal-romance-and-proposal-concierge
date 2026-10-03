@@ -6,7 +6,7 @@ import { buildWhatsAppLink, CONCIERGE_PHONE } from '../lib/contact';
 interface HeroBannerProps {
   selectedOccasion: OccasionType | 'all';
   setSelectedOccasion: (occ: OccasionType | 'all') => void;
-  onOpenAIArchitect: () => void;
+  onOpenIdeaFinder: () => void;
   onOpenCustomizer: () => void;
   onOpenBespokeModal: () => void;
 }
@@ -17,7 +17,7 @@ const HERO_IMAGE_SMALL = 'https://images.unsplash.com/photo-1561181286-d3fee7d55
 export const HeroBanner: React.FC<HeroBannerProps> = ({
   selectedOccasion,
   setSelectedOccasion,
-  onOpenAIArchitect,
+  onOpenIdeaFinder,
   onOpenCustomizer,
   onOpenBespokeModal,
 }) => {
@@ -63,7 +63,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 className="w-full sm:w-auto flex items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-gradient-to-r from-rose-600 to-pink-600 text-white text-sm font-semibold shadow-md shadow-rose-200 hover:from-rose-700 hover:to-pink-700 active:scale-98 transition"
               >
                 <Heart className="w-4 h-4" />
-                <span>Plan My Surprise</span>
+                <span>Get a Free Quote</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
               <a
@@ -78,12 +78,12 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
             </div>
 
             <button
-              id="hero-ai-architect-btn"
-              onClick={onOpenAIArchitect}
+              id="hero-idea-finder-btn"
+              onClick={onOpenIdeaFinder}
               className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-rose-700 hover:text-rose-800 underline underline-offset-4 decoration-rose-300"
             >
               <Sparkles className="w-4 h-4 text-amber-500" />
-              Not sure yet? Get a free AI-drafted plan and script in a minute
+              Not sure what to choose? Answer 3 quick questions
             </button>
 
             {/* Trust strip */}
@@ -91,15 +91,15 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
               <div className="flex items-start gap-2.5">
                 <Lock className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-stone-900">No payment online</h4>
-                  <p className="text-[11px] text-stone-500 leading-snug">We confirm your date first. EFT deposit after that.</p>
+                  <h4 className="text-xs font-bold text-stone-900">Free, no-obligation quote</h4>
+                  <p className="text-[11px] text-stone-500 leading-snug">Tell us your idea. Nothing is charged online.</p>
                 </div>
               </div>
               <div className="flex items-start gap-2.5">
                 <ShieldCheck className="w-4 h-4 text-rose-600 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h4 className="text-xs font-bold text-stone-900">Clear Rand pricing</h4>
-                  <p className="text-[11px] text-stone-500 leading-snug">Package prices shown upfront, from R1,950.</p>
+                  <h4 className="text-xs font-bold text-stone-900">Priced to your plans</h4>
+                  <p className="text-[11px] text-stone-500 leading-snug">Your quote fits your city, venue and budget.</p>
                 </div>
               </div>
               <div className="flex items-start gap-2.5">

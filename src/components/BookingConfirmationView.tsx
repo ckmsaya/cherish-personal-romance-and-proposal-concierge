@@ -4,9 +4,9 @@ import { BookingConfirmation } from '../types';
 import { buildWhatsAppLink, buildMailtoLink, CONCIERGE_PHONE, CONCIERGE_EMAIL, CONCIERGE_TEAM_NAME } from '../lib/contact';
 
 const NEXT_STEPS = [
-  'We check availability for your date, location, and the vendors you selected.',
-  'We contact you on WhatsApp or email to confirm the details and send deposit payment instructions.',
-  'Your date is secured once your deposit is received. No payment is taken on this website.',
+  'We check availability for your date, location, and the extras you selected.',
+  'We send your personalised quote on WhatsApp or email, usually within one business day.',
+  'If you accept, an EFT deposit secures your date. No payment is taken on this website.',
 ];
 
 interface BookingConfirmationViewProps {
@@ -32,13 +32,13 @@ export const BookingConfirmationView: React.FC<BookingConfirmationViewProps> = (
           <CheckCircle2 className="w-9 h-9" />
         </div>
         <span className="inline-block px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold mb-2">
-          Booking Request Received
+          Quote Request Received
         </span>
         <h2 className="font-serif-luxury text-3xl sm:text-5xl font-bold text-stone-900 tracking-tight mb-3">
           Thank You. We’ve Got Your Request.
         </h2>
         <p className="text-stone-600 text-sm sm:text-base leading-relaxed">
-          Nothing has been charged. We’ll check availability for your date and contact you on WhatsApp or email to confirm the details and send deposit payment instructions.
+          Nothing has been charged. We’ll check availability for your date and send your personalised quote on WhatsApp or email, usually within one business day.
         </p>
       </div>
 
@@ -50,7 +50,7 @@ export const BookingConfirmationView: React.FC<BookingConfirmationViewProps> = (
             <div className="flex items-center gap-2 mb-1">
               <span className="font-serif-luxury text-2xl font-bold">Cherish Concierge</span>
               <span className="text-[11px] font-semibold bg-rose-600 text-white px-2 py-0.5 rounded-full">
-                Booking Request
+                Quote Request
               </span>
             </div>
             <p className="text-xs text-stone-400">
@@ -87,7 +87,7 @@ export const BookingConfirmationView: React.FC<BookingConfirmationViewProps> = (
               <a
                 href={buildWhatsAppLink(
                   CONCIERGE_PHONE,
-                  `Hi Cherish! Following up on my booking request ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.`
+                  `Hi Cherish! Following up on my quote request ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.`
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -101,7 +101,7 @@ export const BookingConfirmationView: React.FC<BookingConfirmationViewProps> = (
                   `Booking ${booking.bookingId}`,
                   `Hi Cherish,
 
-Following up on my booking request ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.
+Following up on my quote request ${booking.bookingId} (${booking.selectedTier}) for ${booking.eventDate}.
 
 Thanks!`
                 )}
@@ -162,7 +162,7 @@ Thanks!`
           {/* Payment & Deposit Summary */}
           <div className="space-y-4">
             <h5 className="text-xs font-bold text-stone-400 uppercase tracking-wider">
-              Cost Estimate
+              Your Quote
             </h5>
 
             <div className="p-4 bg-stone-50 rounded-2xl border border-stone-200 space-y-2.5 text-xs">
@@ -170,25 +170,14 @@ Thanks!`
                 <span>Selected Tier:</span>
                 <span className="font-bold text-stone-900">{booking.selectedTier}</span>
               </div>
-              <div className="flex items-center justify-between text-stone-600">
-                <span>Total Estimated Cost:</span>
-                <span className="font-bold text-stone-900">R{booking.totalEstimatedAmount.toLocaleString()}</span>
-              </div>
-
-              <div className="pt-2 border-t border-stone-200 flex items-center justify-between text-sm">
-                <span className="font-bold text-stone-900">Deposit to Secure Date:</span>
-                <span className="font-bold text-rose-700 text-base">R{booking.depositPaid.toLocaleString()}</span>
-              </div>
-
-              <div className="pt-1 flex items-center justify-between text-[11px] text-stone-500">
-                <span>Balance Due on Event Day:</span>
-                <span className="font-semibold text-stone-800">R{booking.balanceRemaining.toLocaleString()}</span>
-              </div>
+              <p className="pt-2 border-t border-stone-200 text-stone-700 leading-relaxed">
+                Your personalised quote, including the deposit to secure your date, is on its way on WhatsApp or email.
+              </p>
             </div>
 
             <div className="flex items-center gap-2 p-3 bg-stone-50 rounded-xl border border-stone-200 text-xs text-stone-700">
               <ShieldCheck className="w-4 h-4 text-stone-500 flex-shrink-0" />
-              <span>Nothing has been charged. Final pricing is confirmed with you before any payment.</span>
+              <span>Nothing has been charged. You only pay once you accept your quote.</span>
             </div>
           </div>
         </div>

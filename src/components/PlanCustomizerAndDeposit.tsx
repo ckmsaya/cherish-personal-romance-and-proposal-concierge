@@ -8,12 +8,14 @@ import { getDeviceId } from '../lib/deviceId';
 interface PlanCustomizerAndDepositProps {
   initialPlan?: ProposalPlan | null;
   initialTier?: ScaleTier | null;
+  onOpenTerms?: () => void;
   onBookingSuccess: (booking: BookingConfirmation) => void;
 }
 
 export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> = ({
   initialPlan,
   initialTier,
+  onOpenTerms,
   onBookingSuccess,
 }) => {
   const [selectedOccasion, setSelectedOccasion] = useState<OccasionType>(
@@ -90,7 +92,7 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
           totalEstimatedAmount,
           depositAmount,
           selectedAddons: selectedAddonIds,
-          specialNotes: specialNotes || (initialPlan ? `Custom AI Concept: ${initialPlan.conceptTitle}` : ''),
+          specialNotes: specialNotes || (initialPlan ? `Selected experience: ${initialPlan.conceptTitle}` : ''),
           plan: initialPlan || null,
         }),
       });
@@ -118,11 +120,11 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
 
         onBookingSuccess(fullBooking);
       } else {
-        setErrorMsg('Your booking request could not be sent. Please verify your details.');
+        setErrorMsg('Your quote request could not be sent. Please verify your details.');
       }
     } catch (err) {
       console.error(err);
-      setErrorMsg('Could not send your booking request. Please check your connection or WhatsApp us.');
+      setErrorMsg('Could not send your quote request. Please check your connection or WhatsApp us.');
     } finally {
       setIsProcessing(false);
     }
@@ -134,13 +136,13 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
       <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-100 text-rose-800 text-xs font-semibold mb-3">
           <HeartHandshake className="w-3.5 h-3.5 text-rose-600" />
-          <span>Build Your Package & Request a Booking</span>
+          <span>Free, No-Obligation Quote</span>
         </div>
         <h2 className="font-serif-luxury text-3xl sm:text-4xl font-bold text-stone-900 tracking-tight mb-2">
-          Select Your Services & Request Your Date
+          Tell Us What You Have in Mind
         </h2>
         <p className="text-stone-600 text-sm sm:text-base">
-          Choose what works for you and send us your request. No payment is taken online: we confirm availability with you first, then send deposit details to secure your date. The balance is paid on the day.
+          Choose a package and any extras, add your date and city, and we will send you a personalised quote, usually within one business day. Nothing is charged online.
         </p>
       </div>
 
@@ -148,7 +150,7 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
         <div className="mb-8 p-4 sm:p-5 bg-gradient-to-r from-rose-50 to-pink-50 rounded-2xl border border-rose-200 flex items-center justify-between gap-4">
           <div>
             <span className="text-[11px] font-bold text-rose-700 uppercase tracking-wider block mb-0.5">
-              Custom AI Plan Attached:
+              Selected Experience:
             </span>
             <h4 className="text-sm sm:text-base font-bold text-stone-900">{initialPlan.conceptTitle}</h4>
             <p className="text-xs text-stone-600 line-clamp-1">{initialPlan.tagline}</p>
@@ -230,12 +232,6 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
                           {tier.badge}
                         </span>
                       </div>
-                      <div className="text-right">
-                        <span className="text-sm sm:text-base font-bold text-stone-900">R{tier.basePrice.toLocaleString()}</span>
-                        <span className="text-[11px] text-emerald-700 block font-semibold">
-                          R{tier.depositAmount.toLocaleString()} deposit
-                        </span>
-                      </div>
                     </div>
 
                     <p className="text-xs text-stone-600 mb-2.5 pl-6">{tier.description}</p>
@@ -278,7 +274,6 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
                     <div>
                       <div className="flex items-start justify-between gap-1 mb-1">
                         <span className="text-xs font-bold leading-snug">{addon.name}</span>
-                        <span className="text-xs font-bold text-rose-700 flex-shrink-0">+R{addon.price.toLocaleString()}</span>
                       </div>
                       <p className="text-[11px] text-stone-500 leading-tight mb-2">{addon.description}</p>
                     </div>
@@ -379,64 +374,38 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
             <div className="bg-white rounded-3xl border border-stone-200 p-6 shadow-md space-y-5">
               <div className="flex items-center justify-between pb-3 border-b border-stone-100">
                 <h3 className="font-serif-luxury text-xl font-bold text-stone-900">
-                  Booking Request
+                  Your Quote Request
                 </h3>
                 <span className="inline-flex items-center gap-1 text-[11px] font-bold text-stone-700 bg-stone-100 px-2.5 py-0.5 rounded-full">
                   <ShieldCheck className="w-3.5 h-3.5" />
-                  No payment online
+                  Free & no obligation
                 </span>
               </div>
 
-              {/* Price Calculation Details */}
-              <div className="space-y-2.5 text-xs">
-                <div className="flex items-center justify-between text-stone-700">
-                  <span>Base Plan: <strong>{currentTier.name}</strong></span>
-                  <span className="font-bold text-stone-900">R{currentTier.basePrice.toLocaleString()}</span>
+              {/* Request summary */}
+              <div className="space-y-2 text-xs">
+                <div className="flex items-center justify-between gap-3 text-stone-700">
+                  <span>Package</span>
+                  <strong className="text-stone-900 text-right">{currentTier.name}</strong>
                 </div>
-
                 {selectedAddonIds.length > 0 && (
-                  <div className="space-y-1.5 pt-2 border-t border-stone-100">
-                    <span className="text-[11px] font-bold text-stone-500 uppercase tracking-wider block">
-                      Added Vendors ({selectedAddonIds.length}):
+                  <div className="flex items-start justify-between gap-3 text-stone-700">
+                    <span>Extras</span>
+                    <span className="text-stone-900 font-medium text-right">
+                      {selectedAddonIds
+                        .map((id) => VENDOR_ADDONS.find((a) => a.id === id)?.name)
+                        .filter(Boolean)
+                        .join(', ')}
                     </span>
-                    {selectedAddonIds.map((id) => {
-                      const addon = VENDOR_ADDONS.find((a) => a.id === id);
-                      if (!addon) return null;
-                      return (
-                        <div key={id} className="flex items-center justify-between text-stone-600 pl-2">
-                          <span className="truncate pr-2">+{addon.name}</span>
-                          <span className="font-medium text-stone-800">R{addon.price.toLocaleString()}</span>
-                        </div>
-                      );
-                    })}
                   </div>
                 )}
-
-                <div className="pt-3 border-t border-stone-200 flex items-center justify-between text-stone-900 text-sm font-semibold">
-                  <span>Total Estimated Cost:</span>
-                  <span>R{totalEstimatedAmount.toLocaleString()}</span>
+                <div className="flex items-center justify-between gap-3 text-stone-700">
+                  <span>Date</span>
+                  <strong className="text-stone-900">{eventDate}</strong>
                 </div>
-
-                {/* Highlighted Deposit Card */}
-                <div className="p-4 bg-gradient-to-br from-rose-50 to-rose-100/70 rounded-2xl border border-rose-200 space-y-2">
-                  <div className="flex items-baseline justify-between">
-                    <div>
-                      <span className="text-xs font-bold text-rose-950 block">
-                        Deposit to Secure Your Date:
-                      </span>
-                      <span className="text-[11px] text-rose-700">
-                        Payable after we confirm availability
-                      </span>
-                    </div>
-                    <span className="text-2xl font-bold text-rose-700">
-                      R{depositAmount.toLocaleString()}
-                    </span>
-                  </div>
-
-                  <div className="pt-2 border-t border-rose-200/80 flex items-center justify-between text-[11px] text-stone-600">
-                    <span>Remaining balance due on event day:</span>
-                    <span className="font-bold text-stone-900">R{balanceRemaining.toLocaleString()}</span>
-                  </div>
+                <div className="flex items-center justify-between gap-3 text-stone-700">
+                  <span>Where</span>
+                  <strong className="text-stone-900 text-right">{cityLocation}</strong>
                 </div>
               </div>
 
@@ -477,11 +446,11 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
                 </div>
               </div>
 
-              {/* How payment works */}
+              {/* How quotes work */}
               <div className="p-3 bg-stone-50 rounded-xl border border-stone-200 text-xs text-stone-700 space-y-1">
-                <p className="font-semibold text-stone-900">How payment works</p>
+                <p className="font-semibold text-stone-900">What happens next</p>
                 <p className="text-[11px] text-stone-600 leading-relaxed">
-                  Sending this request does not charge you. We will WhatsApp or email you to confirm availability and send EFT details for the deposit. Your date is secured once the deposit is received.
+                  We check availability and send your personalised quote on WhatsApp or email. If you are happy with it, an EFT deposit secures your date. Nothing is charged on this website.
                 </p>
               </div>
 
@@ -503,13 +472,17 @@ export const PlanCustomizerAndDeposit: React.FC<PlanCustomizerAndDepositProps> =
                 ) : (
                   <>
                     <Send className="w-4 h-4" />
-                    <span>Send Booking Request</span>
+                    <span>Get My Free Quote</span>
                   </>
                 )}
               </button>
 
               <p className="text-[11px] text-center text-stone-500 leading-tight">
-                We usually reply within one business day.
+                We usually reply within one business day. By requesting a quote you agree to our{' '}
+                <button type="button" onClick={onOpenTerms} className="underline underline-offset-2 text-stone-700 hover:text-rose-700">
+                  Terms &amp; Conditions
+                </button>
+                .
               </p>
             </div>
           </div>

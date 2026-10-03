@@ -58,7 +58,7 @@ export const ActiveBookingsList: React.FC<ActiveBookingsListProps> = ({
       <div className="flex items-center justify-between mb-8">
         <div>
           <h2 className="font-serif-luxury text-3xl font-bold text-stone-900">
-            My Booking Requests & Inquiries
+            My Quote Requests & Inquiries
           </h2>
           <p className="text-stone-500 text-xs sm:text-sm mt-1">
             Access your personalized cue cards, vendor squad contacts, and tailored bespoke briefs.
@@ -176,7 +176,7 @@ export const ActiveBookingsList: React.FC<ActiveBookingsListProps> = ({
             <div className="flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500" />
               <h3 className="text-xs font-bold uppercase tracking-wider text-stone-700">
-                Booking Requests ({bookings.length})
+                Quote Requests ({bookings.length})
               </h3>
             </div>
           )}
@@ -202,8 +202,8 @@ export const ActiveBookingsList: React.FC<ActiveBookingsListProps> = ({
                 </div>
 
                 <div className="text-left sm:text-right">
-                  <span className="text-xs text-stone-500 block">Deposit to Secure:</span>
-                  <span className="text-lg font-bold text-stone-900">R{booking.depositPaid.toLocaleString()}</span>
+                  <span className="text-xs text-stone-500 block">Package</span>
+                  <span className="text-sm font-bold text-stone-900">{booking.selectedTier}</span>
                 </div>
               </div>
 
